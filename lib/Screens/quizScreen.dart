@@ -46,12 +46,94 @@ class _QuizScreenState extends State<QuizScreen> {
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        "${score}/30",
+                        "${score}/20",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.bold),
-                      )
+                      ),
+                      score >= 15
+                          ? Text(
+                              "Congratulations your are successfully completed LLR test. Your learner's license will issued within 2 days",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 25),
+                              textAlign: TextAlign.center,
+                            )
+                          : Text(
+                              "Sorry need minimum 15 marks to apply for LLR",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 25),
+                              textAlign: TextAlign.center,
+                            ),
+                      score >= 15
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 18.0),
+                              child: InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  height: 40,
+                                  width: 190,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(4, 4),
+                                          spreadRadius: 1,
+                                          blurRadius: 2,
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Center(
+                                    child: Text(
+                                      "Continue",
+                                      style: TextStyle(
+                                        color: AppConstants.backgroundColors,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 18.0),
+                              child: InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  height: 40,
+                                  width: 190,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(4, 4),
+                                          spreadRadius: 1,
+                                          blurRadius: 2,
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Center(
+                                    child: Text(
+                                      "Continue",
+                                      style: TextStyle(
+                                        color: AppConstants.backgroundColors,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                     ],
                   );
                 } else {
@@ -153,6 +235,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                     controller.nextPage(
                                         duration: Duration(milliseconds: 750),
                                         curve: Curves.linear);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Need to select one option")));
                                   }
                                 },
                                 child: Text(

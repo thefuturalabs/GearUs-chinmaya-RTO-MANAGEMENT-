@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'Screens/applyScreen1.dart';
 import 'Screens/loginScreen.dart';
 import 'Screens/quizScreen.dart';
 import 'Screens/sample.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home:QuizScreen(),
+      home:ApplyScreen1(),
     );
   }
 }
