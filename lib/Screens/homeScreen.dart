@@ -4,6 +4,7 @@ import 'package:gearus_app/Screens/renewalScreen.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
 
 import 'applyScreen1.dart';
+import 'feedbackScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -174,14 +175,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
+
+            Card(
+              child: ListTile(
+                title: Text("View documents"),
+                trailing: Icon(Icons.document_scanner),
+                onTap: () {
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) =>  RenewalScreen(),
+                  // ));
+                },
+              ),
+            ),
             Card(
               child: ListTile(
                 title: Text("Feedback"),
                 trailing: Icon(Icons.feedback),
                 onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) =>  RenewalScreen(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>  FeedBackScreen(),
+                  ));
                 },
               ),
             ),

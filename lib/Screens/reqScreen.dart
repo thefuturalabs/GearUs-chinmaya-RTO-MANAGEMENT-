@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
+import 'package:intl/intl.dart';
+
 
 class ReqScreen extends StatefulWidget {
   const ReqScreen({Key? key}) : super(key: key);
@@ -15,13 +17,42 @@ class _ReqScreenState extends State<ReqScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confimPassswordContoller = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController qualificationController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isPasswordVisible = true;
+
+  int groupLicenseValue = 0;
+  bool isAdult =false;
+   dateselecting() async {
+    DateTime? date = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2025));
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String formatted = formatter.format(date!);
+    var yearDiff = DateTime.now().year - date.year;
+    var monthDiff =  DateTime.now().month - date.month;
+    var dayDiff =  DateTime.now().day - date.day;
+    if( yearDiff > 18 || yearDiff == 18 && monthDiff >= 0 && dayDiff >= 0){
+      setState(() {
+
+        isAdult =true;
+      });
+    }
+    setState(() {
+      dobController.text = formatted;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppConstants.backgroundColors,
-      resizeToAvoidBottomInset: false,
+
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
           child: Stack(
         children: [
@@ -128,6 +159,7 @@ class _ReqScreenState extends State<ReqScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             controller: phoneController,
+                            keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Please enter the phone number";
@@ -171,6 +203,52 @@ class _ReqScreenState extends State<ReqScreen> {
                                     fontWeight: FontWeight.w500)),
                           ),
                         ),
+                        Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: dobController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter the date of birth";
+                      }
+                    },
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500),
+                    readOnly: true,
+                    onTap: (){
+                      dateselecting();
+                    },
+                    decoration: InputDecoration(
+                        errorStyle: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: AppConstants.backgroundColors),
+                        errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppConstants.backgroundColors,
+                                width: 2)),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppConstants.backgroundColors, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppConstants.backgroundColors, width: 2),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppConstants.backgroundColors, width: 2),
+                        ),
+                        hintText: "Date of birth",
+                        suffixIcon: Icon(Icons.calendar_month,color: Colors.grey,),
+                        hintStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500)),
+                  ),
+                ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
@@ -218,6 +296,138 @@ class _ReqScreenState extends State<ReqScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            controller: qualificationController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter the qualification";
+                              }
+                            },
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500),
+                            decoration: InputDecoration(
+                                errorStyle: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppConstants.backgroundColors),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppConstants.backgroundColors,
+                                        width: 2)),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                hintText: "Qualification",
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: addressController,
+                            maxLines: 3,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter the address";
+                              }
+                            },
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500),
+                            decoration: InputDecoration(
+                                errorStyle: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppConstants.backgroundColors),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppConstants.backgroundColors,
+                                        width: 2)),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                hintText: "Address",
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Already have license",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                "No",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18),
+                              ),
+                              Radio(
+                                  value: 1,
+                                  groupValue: groupLicenseValue,
+                                  activeColor: AppConstants.backgroundColors,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupLicenseValue = value!;
+                                    });
+                                  }),
+                              Text(
+                                "Yes",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18),
+                              ),
+                              Radio(
+                                  value: 2,
+                                  groupValue: groupLicenseValue,
+                                  activeColor: AppConstants.backgroundColors,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      groupLicenseValue = value!;
+                                    });
+                                  }),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
                             controller: passwordController,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -254,27 +464,27 @@ class _ReqScreenState extends State<ReqScreen> {
                                 ),
                                 suffixIcon: isPasswordVisible == true
                                     ? InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      isPasswordVisible = false;
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.visibility,
-                                    color: Colors.grey,
-                                  ),
-                                )
+                                        onTap: () {
+                                          setState(() {
+                                            isPasswordVisible = false;
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.visibility,
+                                          color: Colors.grey,
+                                        ),
+                                      )
                                     : InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      isPasswordVisible = true;
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.visibility_off,
-                                    color: Colors.grey,
-                                  ),
-                                ),
+                                        onTap: () {
+                                          setState(() {
+                                            isPasswordVisible = true;
+                                          });
+                                        },
+                                        child: Icon(
+                                          Icons.visibility_off,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                 hintText: "Password",
                                 hintStyle: TextStyle(
                                     color: Colors.grey,
@@ -282,13 +492,31 @@ class _ReqScreenState extends State<ReqScreen> {
                                     fontWeight: FontWeight.w500)),
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(top: 18.0),
                           child: InkWell(
                             onTap: () {
-                              final valid = formKey.currentState!.validate();
-                              if (valid == true) {}
+                             final valid = formKey.currentState!.validate();
+
+                              if (valid == true) {
+                                if (groupLicenseValue == 0) {
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              "please fill all the details")));
+                                } else {
+                                  if(isAdult == false){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                "Must have 18 years old")));
+                                  }
+
+
+
+                                }
+                              }
                             },
                             child: Container(
                               height: 40,
@@ -333,15 +561,3 @@ class _ReqScreenState extends State<ReqScreen> {
     );
   }
 }
-// Center(
-// child: Form(
-// key: formKey,
-// child: SingleChildScrollView(
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.center,
-// children: [
-// ],
-// ),
-// ),
-// ),
-// ),
