@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gearus_app/controller/services.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
 import 'package:intl/intl.dart';
 
+import 'loginScreen.dart';
 
 class ReqScreen extends StatefulWidget {
   const ReqScreen({Key? key}) : super(key: key);
@@ -24,8 +26,63 @@ class _ReqScreenState extends State<ReqScreen> {
   bool isPasswordVisible = true;
 
   int groupLicenseValue = 0;
-  bool isAdult =false;
-   dateselecting() async {
+  bool isAdult = false;
+
+  messages() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            title: Text("Note"),
+            content: Container(
+              height: 120,
+              child: Column(
+                children: [
+                  Text(
+                    "Please wait for admin approval",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 120,
+                      child: Center(
+                        child: Text(
+                          "Ok",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppConstants.backgroundColors,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(4, 4),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ));
+      },
+    );
+  }
+
+  dateselecting() async {
     DateTime? date = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -34,12 +91,11 @@ class _ReqScreenState extends State<ReqScreen> {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String formatted = formatter.format(date!);
     var yearDiff = DateTime.now().year - date.year;
-    var monthDiff =  DateTime.now().month - date.month;
-    var dayDiff =  DateTime.now().day - date.day;
-    if( yearDiff > 18 || yearDiff == 18 && monthDiff >= 0 && dayDiff >= 0){
+    var monthDiff = DateTime.now().month - date.month;
+    var dayDiff = DateTime.now().day - date.day;
+    if (yearDiff > 18 || yearDiff == 18 && monthDiff >= 0 && dayDiff >= 0) {
       setState(() {
-
-        isAdult =true;
+        isAdult = true;
       });
     }
     setState(() {
@@ -51,7 +107,6 @@ class _ReqScreenState extends State<ReqScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppConstants.backgroundColors,
-
       resizeToAvoidBottomInset: true,
       body: SafeArea(
           child: Stack(
@@ -204,51 +259,57 @@ class _ReqScreenState extends State<ReqScreen> {
                           ),
                         ),
                         Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    controller: dobController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter the date of birth";
-                      }
-                    },
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500),
-                    readOnly: true,
-                    onTap: (){
-                      dateselecting();
-                    },
-                    decoration: InputDecoration(
-                        errorStyle: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: AppConstants.backgroundColors),
-                        errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: AppConstants.backgroundColors,
-                                width: 2)),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: AppConstants.backgroundColors, width: 2),
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: dobController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter the date of birth";
+                              }
+                            },
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500),
+                            readOnly: true,
+                            onTap: () {
+                              dateselecting();
+                            },
+                            decoration: InputDecoration(
+                                errorStyle: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppConstants.backgroundColors),
+                                errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: AppConstants.backgroundColors,
+                                        width: 2)),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: AppConstants.backgroundColors,
+                                      width: 2),
+                                ),
+                                hintText: "Date of birth",
+                                suffixIcon: Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.grey,
+                                ),
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500)),
+                          ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: AppConstants.backgroundColors, width: 2),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: AppConstants.backgroundColors, width: 2),
-                        ),
-                        hintText: "Date of birth",
-                        suffixIcon: Icon(Icons.calendar_month,color: Colors.grey,),
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500)),
-                  ),
-                ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
@@ -495,26 +556,50 @@ class _ReqScreenState extends State<ReqScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 18.0),
                           child: InkWell(
-                            onTap: () {
-                             final valid = formKey.currentState!.validate();
+                            onTap: ()async {
+
+                              final valid = formKey.currentState!.validate();
 
                               if (valid == true) {
                                 if (groupLicenseValue == 0) {
-
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           content: Text(
                                               "please fill all the details")));
                                 } else {
-                                  if(isAdult == false){
+                                  if (isAdult == false) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                             content: Text(
                                                 "Must have 18 years old")));
+                                  } else {
+                                    try {
+                                   var data = await  Services.userRegistration(
+                                          nameController.text,
+                                          emailController.text,
+                                          phoneController.text,
+
+                                          addressController.text,
+                                          dobController.text,
+                                          qualificationController.text,
+                                          groupLicenseValue == 1 ? "No":"Yes",
+                                          passwordController.text,
+                                          context);
+
+                                   if(data== true){
+                                     await messages();
+                                     Navigator.of(context).pushAndRemoveUntil(
+                                       // the new route
+                                       MaterialPageRoute(
+                                         builder: (BuildContext context) => LoginScreen(),
+                                       ),
+
+                                           (Route route) => false,
+                                     );
+                                   }
+
+                                    } catch (e) {}
                                   }
-
-
-
                                 }
                               }
                             },

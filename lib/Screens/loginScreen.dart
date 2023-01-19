@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gearus_app/Screens/reqScreen.dart';
+import 'package:gearus_app/controller/services.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
 
 import 'homeScreen.dart';
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               },
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 17,
                                   fontWeight: FontWeight.w500),
                               decoration: InputDecoration(
@@ -193,8 +194,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 18.0),
                             child: InkWell(
-                              onTap: () {
+                              onTap: ()async {
                                 final valid = formKey.currentState!.validate();
+
+
+
+                                if(valid == true){
+
+                                  var data = await Services.login(nameController.text, passwordController.text,context);
+
+                                  if(data == true){
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      // the new route
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) => HomeScreen(),
+                                      ),
+
+                                          (Route route) => false,
+                                    );
+
+                                  }
+
+
+                                }
 
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => HomeScreen(),
@@ -253,6 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
+
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(
                                           builder: (context) => ReqScreen(),

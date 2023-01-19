@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gearus_app/Screens/profileScreen.dart';
 import 'package:gearus_app/Screens/renewalScreen.dart';
+import 'package:gearus_app/controller/services.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
 
 import 'applyScreen1.dart';
@@ -100,6 +101,32 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+  Map? userDeatils;
+  String? fnamelatter;
+
+  getDetails()async{
+    var d = await Services.getDtails();
+    setState(() {
+      userDeatils = d;
+      if (userDeatils!["name"]!.length >= 3) {
+        fnamelatter =userDeatils!["name"].substring(0, 1).toString();
+      } else {
+        fnamelatter = "";
+      }
+
+    });
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getDetails();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var MediaQ = MediaQuery.of(context).size;
@@ -138,15 +165,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: AppConstants.backgroundColors),
                 accountName: Text(
-                  "Sourav",
+                  userDeatils!["name"] ?? "",
                   style: TextStyle(fontSize: 18),
                 ),
-                accountEmail: Text("Souravkk@gmail.com"),
+                accountEmail: Text(userDeatils!["email"] ?? ""),
                 currentAccountPictureSize: Size.square(50),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Text(
-                    "A",
+                    fnamelatter!.toUpperCase(),
                     style: TextStyle(
                         fontSize: 30.0, color: AppConstants.backgroundColors),
                   ), //Text
