@@ -1,4 +1,7 @@
-
+<?php
+include 'connection.php';
+$data=mysqli_query($con,"select * from registration_tb where status='register'");
+?>
 
 
 <!DOCTYPE html>
@@ -59,12 +62,80 @@
     <!-- Navbar End -->
 
 
-    <!-- Page Header Start -->
     <div class="container-fluid page-header py-6 my-6 mt-0 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
-            <!-- <h1 class="display-4 text-white animated slideInDown mb-4">Contact Us</h1> -->
-<div class="col-lg-8 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s"> 
+          
+<div class="col-12 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s"> 
+    <form action="" method="POST">
+                     <div class="bg-primary text-center p-5">
+                        <h1 class="mb-4">User Registration</h1>
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                    <table class="table table-bordered" class="table-warning">
+                      <thead>
+                        <tr>
+                
+                          <th>
+                            name
+                          </th>
+                          <th>
+                            DOB
+                          </th>
+                          <th>
+                            Email
+                          </th>
+                          <th>
+                            Phone No
+                          </th>
+                          <th>
+                          Licence status
+                          </th>
+                          <th>
+                            Address
+                          </th>
+                          <th>
+                            Qualification
+                          </th>
+                          <th>
+                            
+                          </th>
+                          <th>
+                            
+                            </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <?php
+        while($row=mysqli_fetch_assoc($data))
+        {
+        ?>
+     <tr>
+    
+    <td><?php echo $row['name'];?></td>
+    <td><?php echo $row['dob'];?></td>
+    <td><?php echo $row['email'];?></td>
+    <td><?php echo $row['phone'];?></td>
+    <td><?php echo $row['licence_status'];?></td>
+    <td><?php echo $row['address'];?></td>
+    <td><?php echo $row['qualification'];?></td> 
+    
+     <td><a style="color: blue;" href="approve_userreg.php?id=<?php echo $row['r_id']?>">APPROVE</a></td> 
+    <td><a style="color: blue;" href="reject_userreg.php?id=<?php echo $row['r_id']?>">REJECT</a></td> 
+ 
    
+   </tr>
+
+       <?php
+        }
+        ?>
+                                </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>  
            
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
@@ -75,39 +146,39 @@
             </nav>
         </div>
     </div>
-    <!-- Page Header End -->
+   
 
 
-    <!-- Contact Start -->
-    <div class="container-xxl py-6">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 450px;">
-                    <div class="position-relative h-100">
-                    <h1>fgyhuijokp</h1>
-                    </div>
-                </div>
-            
-            </div>
-        </div>
-    </div>
-    <!-- Contact End -->
 
 
-    <!-- Footer Start -->
- 
-    <!-- Footer End -->
 
 
-    <!-- Copyright Start -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
     
-    <!-- Copyright End -->
-
-
-    <!-- Back to Top -->
-    <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
-
-
+                    
+        
+     
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
