@@ -49,9 +49,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.php" class="nav-item nav-link">Home</a>
+                <a href="home.php" class="nav-item nav-link">Home</a>
                 <a href="view_userreg.php" class="nav-item nav-link">View Registration</a>
-                <a href="" class="nav-item nav-link">View Registration</a>
+                <a href="" class="nav-item nav-link"></a>
                 <a href="" class="nav-item nav-link">Logout</a>
                
         </div>
@@ -84,7 +84,7 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 450px;">
                     <div class="position-relative h-100">
-                    <h1>fgyhuijokp</h1>
+                    <h1></h1>
                     </div>
                 </div>
             

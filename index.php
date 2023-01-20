@@ -52,7 +52,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.php" class="nav-item nav-link active" >Home</a>
+                <a href="home.php" class="nav-item nav-link active" >Home</a>
                 <a href="login.php" class="nav-item nav-link">Login</a>
               
             </div>

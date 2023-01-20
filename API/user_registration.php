@@ -5,6 +5,7 @@ include 'connection.php';
 
 
 $name=$_POST["name"];
+
 // var_dump($name);
 // exit();
 $email=$_POST["email"];

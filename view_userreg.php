@@ -52,9 +52,9 @@ $data=mysqli_query($con,"select * from registration_tb where status='register'")
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.php" class="nav-item nav-link">Home</a>
+                <a href="home.php" class="nav-item nav-link">Home</a>
                 <a href="view_userreg.php" class="nav-item nav-link">View Registration</a>
-                <a href="" class="nav-item nav-link">View Registration</a>
+                <a href="" class="nav-item nav-link"></a>
                 <a href="" class="nav-item nav-link">Logout</a>
                
         </div>
