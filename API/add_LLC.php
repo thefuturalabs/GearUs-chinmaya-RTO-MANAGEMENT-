@@ -69,7 +69,7 @@ $data=mysqli_query($con,"INSERT INTO `learners_llc_tb`(`first_name`, `last_name`
 }
  else
  {
-  $response['message']="sucess";
+  $response['message']="failed";
  
   // $myarray['message']='failed';
    
