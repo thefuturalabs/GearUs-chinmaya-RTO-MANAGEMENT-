@@ -102,8 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-  Map? userDeatils;
-  String? fnamelatter;
+  Map userDeatils={"name":"","id":"","email":""};
+  String fnamelatter=" ";
 
   getDetails()async{
     var d = await Services.getDtails();
@@ -165,10 +165,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: AppConstants.backgroundColors),
                 accountName: Text(
-                  userDeatils!["name"] ?? "",
+                  userDeatils["name"] ?? "",
                   style: TextStyle(fontSize: 18),
                 ),
-                accountEmail: Text(userDeatils!["email"] ?? ""),
+                accountEmail: Text(userDeatils["email"] ?? ""),
                 currentAccountPictureSize: Size.square(50),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,

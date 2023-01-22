@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   errorStyle: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
-                                      color:AppConstants.backgroundColors),
+                                      color: AppConstants.backgroundColors),
                                   errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: AppConstants.backgroundColors,
@@ -145,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: AppConstants.backgroundColors),
                                   errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: AppConstants.backgroundColors, width: 2)),
+                                          color: AppConstants.backgroundColors,
+                                          width: 2)),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                         color: AppConstants.backgroundColors,
@@ -194,38 +195,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 18.0),
                             child: InkWell(
-                              onTap: ()async {
+                              onTap: () async {
                                 final valid = formKey.currentState!.validate();
 
+                                if (valid == true) {
+                                  var data = await Services.login(
+                                      nameController.text,
+                                      passwordController.text,
+                                      context);
 
-
-                                if(valid == true){
-
-                                  var data = await Services.login(nameController.text, passwordController.text,context);
-
-                                  if(data == true){
+                                  if (data == true) {
                                     Navigator.of(context).pushAndRemoveUntil(
                                       // the new route
                                       MaterialPageRoute(
-                                        builder: (BuildContext context) => HomeScreen(),
+                                        builder: (BuildContext context) =>
+                                            HomeScreen(),
                                       ),
 
-                                          (Route route) => false,
+                                      (Route route) => false,
                                     );
-
                                   }
-
-
                                 }
-
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
-                                ));
-
-// if (valid == true) {
-//   // Apis().login(nameController.text,
-//   //     passwordController.text, context);
-// }
                               },
                               child: Container(
                                 height: 40,
@@ -275,7 +265,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     InkWell(
                                       onTap: () {
-
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(
                                           builder: (context) => ReqScreen(),

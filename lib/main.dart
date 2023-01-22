@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:gearus_app/Screens/homeScreen.dart';
+import 'package:gearus_app/controller/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screens/applyScreen1.dart';
 import 'Screens/loginScreen.dart';
 import 'Screens/quizScreen.dart';
 import 'Screens/sample.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  var id = await Services.getDtails();
+
+  runApp( MyApp(id: id["id"] ?? "null",));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  String id;
+   MyApp({super.key,required this.id});
 
   // This widget is the root of your application.
   @override 
@@ -25,7 +32,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true
 
       ),
-      home:LoginScreen(),
+      home: id == "null" ? LoginScreen():HomeScreen(),
     );
   }
 }

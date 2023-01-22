@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gearus_app/Screens/loginScreen.dart';
@@ -89,4 +90,62 @@ class Services {
       }
     }
   }
+
+ static Future applyForLCC(String address,email,Birth_place,phone,Blood_group,city,dob,first_name,iden_mark,last_name,LLc_type, File image, File qualificattionPhoto, qulaification,state,BuildContext context)async{
+
+
+   var details = await getDtails();
+   var id =await details["id"];
+
+    final fullurl = "${url}add_LLC.php";
+    var request = MultipartRequest("POST", Uri.parse(fullurl));
+    request.fields["address"] = address;
+    request.fields["email"] = email;
+    request.fields["Birth_place"] = Birth_place;
+    request.fields["phone"] = phone;
+    request.fields["Blood_group"] = Blood_group;
+    request.fields["city"] = city;
+    request.fields["DOB"] = dob;
+    request.fields["first_name"] = first_name;
+    request.fields["iden_mark"] = iden_mark;
+    request.fields["last_name"] = last_name;
+    request.fields["LLc_type"] = LLc_type;
+    request.fields["qualificattion"] = qulaification;
+    request.fields["state"] = state;
+    request.fields["r_id"] = id;
+
+
+    request.files.add(MultipartFile.fromBytes(
+        "proof", File(qualificattionPhoto!.path).readAsBytesSync(),
+        filename: image!.path));
+    request.files.add(MultipartFile.fromBytes(
+        "image", File(image!.path).readAsBytesSync(),
+        filename: image!.path));
+
+
+
+
+    request.send().then((response) async {
+      if (response.statusCode == 200) {
+        print("Uploaded!");
+        final data = await Response.fromStream(response);
+
+        var rbody = jsonDecode(data.body);
+        if (rbody["message"] == "sucess") {
+          print(data.body);
+
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Somthing went wrong please try again")));
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Somthing went wrong please try again")));
+      }
+    });
+
+
+  }
+
+
 }
