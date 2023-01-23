@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gearus_app/Screens/loginScreen.dart';
 import 'package:gearus_app/Screens/profileScreen.dart';
+import 'package:gearus_app/Screens/quizStartingScreen.dart';
 import 'package:gearus_app/Screens/renewalScreen.dart';
 import 'package:gearus_app/controller/services.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'applyScreen1.dart';
 import 'feedbackScreen.dart';
@@ -105,12 +108,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Map userDeatils={"name":"","id":"","email":""};
   String fnamelatter=" ";
 
+
+  bool applyedforLCC = false;
+
   getDetails()async{
     var d = await Services.getDtails();
+    await Services.viewLLC();
+    if( d["applyforllc"] == "yes"){
+
+      setState(() {
+        applyedforLCC = true;
+      });
+    }
+
     setState(() {
       userDeatils = d;
-      if (userDeatils!["name"]!.length >= 3) {
-        fnamelatter =userDeatils!["name"].substring(0, 1).toString();
+      if (userDeatils["name"]!.length >= 3) {
+        fnamelatter =userDeatils["name"].substring(0, 1).toString();
       } else {
         fnamelatter = "";
       }
@@ -123,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     getDetails();
+
     super.initState();
   }
 
@@ -134,8 +149,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppConstants.backgroundColors,
-        onPressed: () {
+        onPressed: ()async {
+          var details = await Services.getDtails();
+        if(details["applyforllc"] == "yes"){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizStartingScreen(),));
+        }else{
+
           applyOrRenewal();
+        }
+
         },
         label: Text(
           "Apply",
@@ -230,18 +252,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text("Logout"),
                 trailing: Icon(Icons.logout),
                 onTap: () async {
-                  // SharedPreferences sharefp =
-                  // await SharedPreferences.getInstance();
-                  // await sharefp.clear();
-                  // Navigator.of(context).pushAndRemoveUntil(
-                  //   // the new route
-                  //   MaterialPageRoute(
-                  //     builder: (BuildContext context) => LoginScreen(),
-                  //   ),
-                  //
-                  //       (Route route) => false,
-                  // );
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
+                  SharedPreferences sharefp =
+                  await SharedPreferences.getInstance();
+                  await sharefp.clear();
+                  Navigator.of(context).pushAndRemoveUntil(
+                    // the new route
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => LoginScreen(),
+                    ),
+
+                        (Route route) => false,
+                  );
+                //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
                 },
               ),
             ),
@@ -264,14 +286,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
+                      applyedforLCC == false ?  Text(
                         "You haven't apply for Driving license",
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.w600),
                         textAlign: TextAlign.center,
+                      ): Text(
+                        "You have applied for LLC ",
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
                       ),
-                      Text(
+                      applyedforLCC == false ?   Text(
                         "Click below to Apply",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ): Text(
+                        "Click below to Start the test",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w600),
                         textAlign: TextAlign.center,

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screens/applyScreen1.dart';
 import 'Screens/loginScreen.dart';
+import 'Screens/profileScreen.dart';
 import 'Screens/quizScreen.dart';
 import 'Screens/sample.dart';
 
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true
 
       ),
-      home: id == "null" ? LoginScreen():HomeScreen(),
+      home: id == "null" ? ProfileScreen():HomeScreen(),
     );
   }
 }

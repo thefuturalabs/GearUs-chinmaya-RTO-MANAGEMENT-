@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gearus_app/Screens/quizStartingScreen.dart';
 import 'package:gearus_app/controller/services.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,7 +28,7 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
     DateTime? date = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2021),
+        firstDate: DateTime(1900),
         lastDate: DateTime(2025));
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String formatted = formatter.format(date!);
@@ -880,14 +881,14 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                   Padding(
                     padding: const EdgeInsets.only(top: 18.0),
                     child: InkWell(
-                      onTap: () {
+                      onTap: ()async {
                         final valid = formkey.currentState!.validate();
                         if (valid) {
                           if (isAdult == false) {
                             Services.errorMessage(
                                 "Must have 18+ year to apply", context);
                           } else {
-                            Services.applyForLCC(
+                          var result = await  Services.applyForLCC(
                                 addressController.text,
                                 emailController.text,
                                 birthplaceController.text,
@@ -904,7 +905,20 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                                 qualificationController.text,
                                 stateController.text,
                                 context);
+
+                          if(result == true){
+                            Navigator.of(context).pop();
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => QuizStartingScreen(),));
+
+
+                          }else{
+
+                          Services.errorMessage("somthing went wrong", context);
                           }
+
+                          }
+
+
                         }
 
                         //
