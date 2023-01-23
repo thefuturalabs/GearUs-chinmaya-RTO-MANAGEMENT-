@@ -27,6 +27,7 @@ $data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` WHERE r_id='$r_id'");
     $myarray['LLC_type']=$row['LLC_type'];
     $myarray['proof']=$row['proof'];
     $myarray['photo']=$row['photo'];
+    $myarray['status']=$row['status'];
     $myarray['state']=$row['state'];
     $myarray['qualification']=$row['qualification'];
     $myarray['message']="sucess";

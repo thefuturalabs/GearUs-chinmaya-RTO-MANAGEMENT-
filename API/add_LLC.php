@@ -49,8 +49,8 @@ if($photo != "")
 $qualificattion=$_POST["qualificattion"];
 $state=$_POST["state"];
 
-
-$data=mysqli_query($con,"INSERT INTO `learners_llc_tb`(`first_name`, `last_name`, `LLC_type`, `state`, `city`, `address`, `DOB`, `Birth_place`, `qualification`, `iden_mark`, `Blood_group`, `proof`, `status`,`email`,`photo`,`r_id`) VALUES ('$first_name','$last_name','$LLc_type','$state','$city','$address','$DOB','$Birth_place','$qualificattion','$iden_mark','$Blood_group','$filenew','register','$email','$filenew1','$r_id')");
+$mark=$_POST["mark"];
+$data=mysqli_query($con,"INSERT INTO `learners_llc_tb`(`first_name`, `last_name`, `LLC_type`, `state`, `city`, `address`, `DOB`, `Birth_place`, `qualification`, `iden_mark`, `Blood_group`, `proof`, `status`,`email`,`photo`,`r_id`,`mark`) VALUES ('$first_name','$last_name','$LLc_type','$state','$city','$address','$DOB','$Birth_place','$qualificattion','$iden_mark','$Blood_group','$filenew','register','$email','$filenew1','$r_id')");
 
 
 
