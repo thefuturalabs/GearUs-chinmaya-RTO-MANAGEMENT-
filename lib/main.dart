@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true
 
       ),
-      home: id == "null" ? ProfileScreen():HomeScreen(),
+      home: id == "null" ? LoginScreen():HomeScreen(),
     );
   }
 }
