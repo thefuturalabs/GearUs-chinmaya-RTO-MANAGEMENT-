@@ -112,7 +112,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Center(
                       child: Text(
-                        "Start",
+                        "Submit",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,

@@ -36,11 +36,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (yearDiff > 18 || yearDiff == 18 && monthDiff >= 0 && dayDiff >= 0) {
       setState(() {
         isAdult = true;
+
       });
     }
     setState(() {
       dobController.text = formatted;
+      alerdydob = false;
     });
+  }
+
+  String? oldemail;
+  String? licStatus;
+  bool alerdydob =false;
+
+  getfulldeatils() async {
+    var details = await Services.getuserFullDetails();
+
+    setState(() {
+      nameController.text = details["name"];
+      addressController.text = details["address"];
+      emailController.text = details["email"];
+      oldemail = details["email"];
+      licStatus = details["licence_status"];
+      dobController.text = details["dob"];
+      passwordController.text = details["password"];
+      qualificationController.text = details["qualification"];
+      alerdydob = true;
+      phoneController.text = details["phone"];
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getfulldeatils();
+    super.initState();
   }
 
   @override
@@ -353,6 +383,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
                               controller: passwordController,
+                              obscureText: isPasswordVisible,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Please enter the password";
@@ -422,10 +453,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {
                                 final valid = formKey.currentState!.validate();
                                 if (valid == true) {
-                                  if (isAdult == false) {
-                                    Services.errorMessage(
-                                        "Must have 18+ years", context);
-                                  } else {}
+                                  print(alerdydob);
+                                  if(alerdydob == false){/// this condition for alredy dob not coming form server
+                                    if (isAdult == false ) {
+                                      Services.errorMessage(
+                                          "Must have 18+ years", context);
+                                    } else {
+                                      Services.updateprofile(
+                                          nameController.text,
+                                          emailController.text,
+                                          phoneController.text,
+                                          addressController.text,
+                                          dobController.text,
+                                          qualificationController.text,
+                                          licStatus,
+                                          passwordController.text,
+                                          context,
+                                          oldemail!);
+                                    }
+                                  }else{
+
+                                    /// this condition for alredy dob  coming form server
+                                    ///
+
+                                    Services.updateprofile(
+                                        nameController.text,
+                                        emailController.text,
+                                        phoneController.text,
+                                        addressController.text,
+                                        dobController.text,
+                                        qualificationController.text,
+                                        licStatus,
+                                        passwordController.text,
+                                        context,
+                                        oldemail!);
+                                  }
+
                                 }
                               },
                               child: Container(

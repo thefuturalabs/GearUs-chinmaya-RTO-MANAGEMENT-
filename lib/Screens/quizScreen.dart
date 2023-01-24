@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gearus_app/controller/services.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
 import 'package:gearus_app/uitilites/questions_list.dart';
+
+import 'homeScreen.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key}) : super(key: key);
@@ -10,6 +13,68 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  sucessmessages() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            title: Text("Note"),
+            content: Container(
+              height: 120,
+              child: Column(
+                children: [
+                  Text(
+                    "Please wait for admin approval",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pop(context);
+                      Navigator.of(context).pushAndRemoveUntil(
+                        // the new route
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              HomeScreen(),
+                        ),
+
+                            (Route route) => false,
+                      );
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 120,
+                      child: Center(
+                        child: Text(
+                          "Ok",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppConstants.backgroundColors,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(4, 4),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ));
+      },
+    );
+  }
   PageController controller = PageController(initialPage: 0);
   bool ispressed = false;
   int score = 0;
@@ -54,7 +119,7 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       score >= 15
                           ? Text(
-                              "Congratulations your are successfully completed LLR test. Your learner's license will issued within 2 days",
+                              "Congratulations your are successfully completed LLC test. Your learner's license will issued within 2 days",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -62,7 +127,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               textAlign: TextAlign.center,
                             )
                           : Text(
-                              "Sorry need minimum 15 marks to apply for LLR",
+                              "Sorry need minimum 15 marks to apply for LLC",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -73,7 +138,24 @@ class _QuizScreenState extends State<QuizScreen> {
                           ? Padding(
                               padding: const EdgeInsets.only(top: 18.0),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () async{
+                                  var result = await Services.updateMark(score.toString());
+
+                                  if(result == true){
+                                    await sucessmessages();
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      // the new route
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            HomeScreen(),
+                                      ),
+
+                                          (Route route) => false,
+                                    );
+
+                                  }
+
+                                },
                                 child: Container(
                                   height: 40,
                                   width: 190,
@@ -91,7 +173,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                           Radius.circular(20))),
                                   child: Center(
                                     child: Text(
-                                      "Continue",
+                                      "Submit Test",
                                       style: TextStyle(
                                         color: AppConstants.backgroundColors,
                                         fontSize: 18,
@@ -105,7 +187,17 @@ class _QuizScreenState extends State<QuizScreen> {
                           : Padding(
                               padding: const EdgeInsets.only(top: 18.0),
                               child: InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    // the new route
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          HomeScreen(),
+                                    ),
+
+                                        (Route route) => false,
+                                  );
+                                },
                                 child: Container(
                                   height: 40,
                                   width: 190,
@@ -231,7 +323,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                         score = score + 1;
                                         print("score is ${score}");
                                       });
-                                    } else {}
+                                    } else {
+
+                                    }
                                     controller.nextPage(
                                         duration: Duration(milliseconds: 750),
                                         curve: Curves.linear);

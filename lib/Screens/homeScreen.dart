@@ -18,6 +18,69 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  messages() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            title: Text("Note"),
+            content: Container(
+              height: 120,
+              child: Column(
+                children: [
+                  Text(
+                    "Please wait for admin approval",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //   // the new route
+                      //   MaterialPageRoute(
+                      //     builder: (BuildContext context) =>
+                      //         HomeScreen(),
+                      //   ),
+                      //
+                      //       (Route route) => false,
+                      // );
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 120,
+                      child: Center(
+                        child: Text(
+                          "Ok",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppConstants.backgroundColors,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(4, 4),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ));
+      },
+    );
+  }
+
   applyOrRenewal() async {
     showDialog(
       context: context,
@@ -66,9 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 InkWell(
                   onTap: () async {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>  RenewalScreen(),
+                      builder: (context) => RenewalScreen(),
                     ));
-
                   },
                   child: Container(
                     height: 40,
@@ -104,18 +166,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-  Map userDeatils={"name":"","id":"","email":""};
-  String fnamelatter=" ";
-
+  Map userDeatils = {"name": "", "id": "", "email": ""};
+  String fnamelatter = " ";
 
   bool applyedforLCC = false;
 
-  getDetails()async{
+  getDetails() async {
     var d = await Services.getDtails();
     await Services.viewLLC();
-    if( d["applyforllc"] == "yes"){
-
+    setState(() {
+      userDeatils = d;
+    });
+    if (d["applyforllc"] == "register") {
       setState(() {
         applyedforLCC = true;
       });
@@ -123,14 +185,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     setState(() {
       userDeatils = d;
+      print(userDeatils);
       if (userDeatils["name"]!.length >= 3) {
-        fnamelatter =userDeatils["name"].substring(0, 1).toString();
+        print("yess");
+        fnamelatter = userDeatils["name"].substring(0, 1).toString();
       } else {
         fnamelatter = "";
       }
-
     });
-
   }
 
   @override
@@ -141,7 +203,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     var MediaQ = MediaQuery.of(context).size;
@@ -149,15 +210,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppConstants.backgroundColors,
-        onPressed: ()async {
+        onPressed: () async {
           var details = await Services.getDtails();
-        if(details["applyforllc"] == "yes"){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizStartingScreen(),));
-        }else{
-
-          applyOrRenewal();
-        }
-
+          if (details["applyforllc"] == "register") {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => QuizStartingScreen(),
+            ));
+          } else if (details["applyforllc"] == "waitForAdminAproval") {
+            messages();
+          } else {
+            applyOrRenewal();
+          }
         },
         label: Text(
           "Apply",
@@ -219,12 +282,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 trailing: Icon(Icons.autorenew),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>  RenewalScreen(),
+                    builder: (context) => RenewalScreen(),
                   ));
                 },
               ),
             ),
-
             Card(
               child: ListTile(
                 title: Text("View documents"),
@@ -242,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 trailing: Icon(Icons.feedback),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>  FeedBackScreen(),
+                    builder: (context) => FeedBackScreen(),
                   ));
                 },
               ),
@@ -253,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 trailing: Icon(Icons.logout),
                 onTap: () async {
                   SharedPreferences sharefp =
-                  await SharedPreferences.getInstance();
+                      await SharedPreferences.getInstance();
                   await sharefp.clear();
                   Navigator.of(context).pushAndRemoveUntil(
                     // the new route
@@ -261,9 +323,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (BuildContext context) => LoginScreen(),
                     ),
 
-                        (Route route) => false,
+                    (Route route) => false,
                   );
-                //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
+                  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Settings(),));
                 },
               ),
             ),
@@ -286,28 +348,50 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      applyedforLCC == false ?  Text(
-                        "You haven't apply for Driving license",
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
-                      ): Text(
-                        "You have applied for LLC ",
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
-                      ),
-                      applyedforLCC == false ?   Text(
-                        "Click below to Apply",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
-                      ): Text(
-                        "Click below to Start the test",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                        textAlign: TextAlign.center,
-                      ),
+                      userDeatils["applyforllc"] == "register"
+                          ? Text(
+                              "You have applied for LLC",
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
+                            )
+                          : userDeatils["applyforllc"] == "waitForAdminAproval"
+                              ? Text(
+                                  "You have applied for LLC",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                )
+                              : Text(
+                                  "You haven't apply for Driving license ",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
+                      userDeatils["applyforllc"] == "register"
+                          ? Text(
+                              "Click below to Start the test",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
+                            )
+                          : userDeatils["applyforllc"] == "waitForAdminAproval"
+                              ? Text(
+                                  "Wait for Approval",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                )
+                              : Text(
+                                  "Click below to apply",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ),
                     ],
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gearus_app/Screens/loginScreen.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Screens/homeScreen.dart';
@@ -161,17 +162,19 @@ class Services {
   static feedback(String feedback, BuildContext context) async {
     var details = await getDtails();
     var id = await details["id"];
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String formatted = formatter.format(DateTime.now());
 
-    var body = {
-      "r_id": id,
-      "feedback": feedback,
-    };
+    var body = {"r_id": id, "feedback": feedback, "Date": formatted.toString()};
+
+    print(body);
 
     var response = await post(Uri.parse("${url}add_feedback.php"), body: body);
 
     if (response.statusCode == 200) {
       var b = jsonDecode(response.body);
-      if (b["message" == "success"]) {
+
+      if (b["message"] == "sucess") {
         Services.errorMessage("feedback added", context);
         Navigator.of(context).pushAndRemoveUntil(
           // the new route
@@ -199,7 +202,11 @@ class Services {
             await SharedPreferences.getInstance();
         if (rbody["status"] == "register") {
           print("applyed");
-          await sharedPreferences.setString("applyforllc", "yes");
+          await sharedPreferences.setString("applyforllc", "register");
+        }
+        if (rbody["status"] == "TEM approve") {
+          print("applyed");
+          await sharedPreferences.setString("applyforllc", "waitForAdminAproval");
         }
 
         return rbody;
@@ -213,7 +220,7 @@ class Services {
     var body = {
       "r_id": id,
     };
-    var response = await post(Uri.parse("${url}.php"), body: body);
+    var response = await post(Uri.parse("${url}view_userreg.php"), body: body);
 
     if (response.statusCode == 200) {
       var rbody = jsonDecode(response.body);
@@ -224,20 +231,55 @@ class Services {
     }
   }
 
- static updateprofile(String name, email, phone, address, dob, qualification,
-      password, BuildContext context) async {
+  static updateprofile(String name, email, phone, address, dob, qualification,
+      licence_status, password, BuildContext context, String emailold) async {
+    var details = await getDtails();
+    var id = await details["id"];
     var body = {
       "name": name,
+      "r_id": id,
       "email": email,
       "phone": phone,
       // "status":status,
+      "licence_status": licence_status,
       "address": address,
       "dob": dob,
       "qualification": qualification,
-      "password": password
+      "password": password,
+      "emailold": emailold
     };
+    print(body);
+    var response =
+        await post(Uri.parse("${url}update_userreg.php"), body: body);
+    if (response.statusCode == 200) {
+      var rbody = jsonDecode(response.body);
+      print(rbody);
+      if (rbody["message"] == "sucess") {
+        Services.errorMessage("Profile updated", context);
+        Navigator.of(context).pushAndRemoveUntil(
+          // the new route
+          MaterialPageRoute(
+            builder: (BuildContext context) => HomeScreen(),
+          ),
 
-    var response = await post(Uri.parse("${url}.php"), body: body);
-    if (response.statusCode == 200) {}
+          (Route route) => false,
+        );
+      }
+    }
+  }
+
+  static Future<dynamic> updateMark(String mark) async {
+    var details = await getDtails();
+    var id = await details["id"];
+    var body = {"r_id": id, "mark": mark};
+    var response =
+        await post(Uri.parse("${url}add_LLC_status.php"), body: body);
+    if (response.statusCode == 200) {
+      var rbody = jsonDecode(response.body);
+
+      if (rbody["message"] == "update") {
+        return true;
+      }
+    }
   }
 }
