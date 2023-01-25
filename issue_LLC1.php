@@ -1,9 +1,18 @@
 <?php
 include 'connection.php';
-$data=mysqli_query($con,"SELECT * FROM `learners_llc_tb`");
+$l_id=$_GET['l_id'];
+
+$data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` where l_id='$l_id'");
+$row=mysqli_fetch_assoc($data);
 if(isset($_POST['submit']))
 {
-echo "<script>alert('sucess')</script>";
+    $lid=$_POST['lid1'];
+    var_dump($lid);
+    exit();
+    
+    $data=mysqli_query($con,"UPDATE `learners_llc_tb` SET status='Issue' WHERE l_id='$lid'");
+//  echo "<script>alert('LLC Issue')</script>";
+
 }
 ?>
 
@@ -12,11 +21,21 @@ echo "<script>alert('sucess')</script>";
 <html lang="en">
 
 <head>
-  <style>
-   td{
-    color: blue;
-   }
-  </style>
+   <style>
+    table,tr,td,th
+    {
+        border: 2px solid black;
+    }
+    td
+    {
+        color:blue;
+    }
+    table{
+        padding: 20%;
+        width: 75%;
+        text-align: center;
+    }
+   </style>
     <meta charset="utf-8">
     <title>Drivin - Driving School Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -77,97 +96,39 @@ echo "<script>alert('sucess')</script>";
 <div class="col-12 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s"> 
     <form action="" method="POST">
                      <div class="bg-primary text-center p-5">
-                        <h1 class="mb-4">Learners Licence Request</h1>
-                        <form>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                    <table class="table table-bordered" class="table-warning">
-                      <thead>
+                        <form action="" method="post">
+                    <table><h1 class="mb-4">Learners Licence Request</h1>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        
+                    </tr>
                         <tr>
-                
-                          <th>
-                            name
-                          </th>
-                          <th>
-                            DOB
-                          </th>
-                          <th>
-                            Email
-                          </th>
-                          <th>
-                            Phone No
-                          </th>
-                         
-                         
-                          <th>
-                            Qualification
-                          </th>
-                          <th>
-                            Mark
-                          </th>
-                       <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      <?php
-        while($row=mysqli_fetch_assoc($data))
-        {
-        ?>
-     <tr>
-     <td><?php echo $row['l_id'];?></td>
-    <td><?php echo $row['first_name'];?> <?php echo $row['last_name'];?></td>
-    <td><?php echo $row['DOB'];?></td>
-    <td><?php echo $row['email'];?></td>
-    <!-- <td><?php echo $row['phone'];?></td> -->
-    <td><?php echo $row['iden_mark'];?></td>
-    <td><?php echo $row['address'];?></td>
-    <td><?php echo $row['mark'];?></td>
-    
-  
- <td>
-   <!-- Button trigger modal -->
-   <?php
-   $lid= $row['l_id'];
-   ?>
-   <a style="color:blue" href="issue_LLC1.php?l_id=<?php echo $lid?>" id="edit">edit</a>
-
-</td>
-<!-- Modal -->
-<form action="home.php" method="POST">
-<div class="modal fade" id="editmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-     
-<!-- 
-    <a href="Approvevan_reg.php?id=<?php echo $row['Van_id']?>" class="btn btn-danger">Approve</a>
-    <a href="Rejectvan_reg.php?id=<?php echo $row['Van_id']?>" class="btn btn-danger">Reject</a> -->
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>
-   </tr>
-
-       <?php
-        }
-        ?>
-                                </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>  
-           
+                            <!-- <td>FirstName</td><td><php echo $row['first_name'];?></php></td> -->
+                          <td>Licence Id:</td> <td><label for="lid" name="lid" ><?php echo $row['l_id'];?></label></td> 
+                         <td>  <label for="">Name:</td> <td><?php echo $row['first_name'];?><?php echo $row['last_name'];?></label></td> </tr>
+    <tr><td> <label for="">DOB</td><td> <?php echo $row['DOB'];?></label></tr>
+    <tr><td><label for="">Email</td><td><?php echo $row['email'];?></label></td></tr>
+    <!-- <label for="">Phone:<?php echo $row['phone'];?></label><br><br> -->
+    <tr> <td><label for="">Birth place</td><td><?php echo $row['Birth_place'];?></label></td></tr>
+    <tr> <td><label for="">Blood group</td><td><?php echo $row['Blood_group'];?></label></td></tr> 
+    <tr><td> <label for="">city</td><td> <?php echo $row['city'];?></label></td> </tr>
+    <tr> <td> <label for="">address</td><td><?php echo $row['address'];?></label></td> </tr>
+    <tr> <td> <label for="">iden_mark</td><td><?php echo $row['iden_mark'];?></label></td> </tr>
+    <tr> <td>  <label for="">LLC_type</td><td><?php echo $row['LLC_type'];?></label></td> </tr>
+    <tr> <td>  <label for="">mark</td><td><?php echo $row['mark'];?></label></td> </tr>
+    <tr> <td>  <label for="">photo</td><td><img src="./image1/<?php echo $row['photo'];?>" height="200" width="200" alt=""> </label></td> </tr>
+    <tr>  <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td> </tr>
+    <tr><td>  <label for="">proof</td><td><img src="./image1/<?php echo $row['photo'];?>" height="200" width="200" alt=""> </label></td> </tr>
+    <tr>   <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td> </tr>
+    <tr> <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td> </tr>
+    <tr> <td>  <label for="">state</td><td><?php echo $row['state'];?></label></td> </tr>
+            <tr><td></td><td> <input name="submit" type="submit" value="submit" />  </tr>      
+            <!-- <tr><button name="submit" class="btn btn-secondary" >Issue</button>   <button class="btn btn-secondary" name="submit">Reject</button></td></tr>      -->
+                    </table>
+         
+                    </form>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <!-- <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
@@ -192,19 +153,6 @@ echo "<script>alert('sucess')</script>";
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <script>
-
-$(document).ready(function () {
- 
-  $('#editbtn').on('Click'), function()
-  {
-    console.log("button worked");
-$('#editmodal').modal('show');
-  }
-
-});
-
-    </script>
 </body>
 
 </html>

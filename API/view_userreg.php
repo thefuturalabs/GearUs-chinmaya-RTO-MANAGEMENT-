@@ -17,8 +17,9 @@ if(mysqli_num_rows($data)>0)
   $myarray['dob']=$row['dob'];
   $myarray['licence_status']=$row['licence_status'];
   $myarray['password']=$row['password'];
-   
-  $response['message']="sucess";
+  $myarray['qualification']=$row['qualification'];
+  $myarray['phone']=$row['phone'];
+  $myarray['message']="sucess";
 }
  else
  {

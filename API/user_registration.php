@@ -19,7 +19,7 @@ mysqli_query($con,"INSERT INTO `login_tb`(`user_name`, `password`, `type`) VALUE
  else
  {
   // $response['message']="failed";
- $myarray['message']='failed';
+ $response['message']='failed';
    
    
 }

@@ -51,7 +51,7 @@
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="home.php" class="nav-item nav-link">Home</a>
                 <a href="view_userreg.php" class="nav-item nav-link">View Registration</a>
-                <a href="" class="nav-item nav-link"></a>
+                <a href="issue_LLC.php" class="nav-item nav-link">Issue LLC</a>
                 <a href="" class="nav-item nav-link">Logout</a>
                
         </div>
