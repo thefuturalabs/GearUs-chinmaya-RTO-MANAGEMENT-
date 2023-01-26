@@ -1,6 +1,6 @@
 <?php
 include 'connection.php';
-$data=mysqli_query($con,"SELECT * FROM `learners_llc_tb`");
+$data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` where status='TEM approve'");
 if(isset($_POST['submit']))
 {
 echo "<script>alert('sucess')</script>";
@@ -63,7 +63,7 @@ echo "<script>alert('sucess')</script>";
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="home.php" class="nav-item nav-link">Home</a>
                 <a href="view_userreg.php" class="nav-item nav-link">View Registration</a>
-                <a href="" class="nav-item nav-link"></a>
+                <a href="issue_LLC.php" class="nav-item nav-link">Issue LLC</a>
                 <a href="" class="nav-item nav-link">Logout</a>
                
         </div>
@@ -85,7 +85,7 @@ echo "<script>alert('sucess')</script>";
                                     <table class="table table-bordered" class="table-warning">
                       <thead>
                         <tr>
-                
+                <th>Id</th>
                           <th>
                             name
                           </th>
@@ -107,6 +107,7 @@ echo "<script>alert('sucess')</script>";
                             Mark
                           </th>
                        <th></th>
+                     
                         </tr>
                       </thead>
                       <tbody>

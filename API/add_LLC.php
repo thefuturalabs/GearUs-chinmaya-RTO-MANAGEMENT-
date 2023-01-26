@@ -33,24 +33,27 @@ if($proof != "")
 
 }
 
-$photo=$_FILES['image']['name'];
-if($photo != "")
-{
-    $filearray=pathinfo($_FILES['image']['name']);
-    $file1=rand();
-   $file_ext=$filearray["extension"];
 
-    $filenew1=$file1 .".".$file_ext;
-
-
-    move_uploaded_file($_FILES['image']['tmp_name'],"../image1/".$filenew1);
-
-}
 $qualificattion=$_POST["qualificattion"];
 $state=$_POST["state"];
 
 $mark=$_POST["mark"];
-$data=mysqli_query($con,"INSERT INTO `learners_llc_tb`(`first_name`, `last_name`, `LLC_type`, `state`, `city`, `address`, `DOB`, `Birth_place`, `qualification`, `iden_mark`, `Blood_group`, `proof`, `status`,`email`,`photo`,`r_id`,`mark`) VALUES ('$first_name','$last_name','$LLc_type','$state','$city','$address','$DOB','$Birth_place','$qualificattion','$iden_mark','$Blood_group','$filenew','register','$email','$filenew1','$r_id')");
+
+$photo=$_FILES['image']['name'];
+
+if($photo != "")
+{
+    $filearray1=pathinfo($_FILES['image']['name']);
+    $file2=rand();
+   $file_ext1=$filearray["extension"];
+
+    $filenew2=$file2 .".".$file_ext1;
+
+
+    move_uploaded_file($_FILES['image']['tmp_name'],"../image1/".$filenew2);
+
+}
+$data=mysqli_query($con,"INSERT INTO `learners_llc_tb`(`first_name`, `last_name`, `LLC_type`, `state`, `city`, `address`, `DOB`, `Birth_place`, `qualification`, `iden_mark`, `Blood_group`, `proof`, `status`,`email`,`photo`,`r_id`,`mark`) VALUES ('$first_name','$last_name','$LLc_type','$state','$city','$address','$DOB','$Birth_place','$qualificattion','$iden_mark','$Blood_group','$filenew','register','$email','$filenew2','$r_id','$mark')");
 
 
 

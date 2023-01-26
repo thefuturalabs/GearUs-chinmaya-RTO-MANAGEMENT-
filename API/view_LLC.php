@@ -8,12 +8,6 @@ $data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` WHERE r_id='$r_id'");
  if(mysqli_num_rows($data)>0)
  {
 
- 
-
-
-
-
-
     $myarray['r_id']=$row['r_id'];
     $myarray['email']=$row['email'];
     $myarray['Birth_place']=$row['Birth_place'];
