@@ -32,7 +32,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_easyloading: ^3.0.5
+  flutter_file_downloader: ^1.1.0+1
   http: ^0.13.5
+  image_downloader: ^0.31.0
   image_picker: ^0.8.6
   intl: ^0.18.0
   shared_preferences: ^2.0.16

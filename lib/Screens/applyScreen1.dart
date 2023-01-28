@@ -906,15 +906,16 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                                 stateController.text,
                                 context);
 
-                          if(result == true){
-                            Navigator.of(context).pop();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => QuizStartingScreen(),));
+                        //  print(result);
 
-
-                          }else{
-
-                          Services.errorMessage("somthing went wrong", context);
-                          }
+                          // if(result == "true"){
+                          //   Navigator.of(context).pop();
+                          //
+                          //
+                          // }else{
+                          //
+                          // Services.errorMessage("somthing went wrong", context);
+                          // }
 
                           }
 

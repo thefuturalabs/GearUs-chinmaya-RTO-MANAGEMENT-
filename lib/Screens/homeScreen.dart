@@ -3,12 +3,14 @@ import 'package:gearus_app/Screens/loginScreen.dart';
 import 'package:gearus_app/Screens/profileScreen.dart';
 import 'package:gearus_app/Screens/quizStartingScreen.dart';
 import 'package:gearus_app/Screens/renewalScreen.dart';
+import 'package:gearus_app/Screens/viewDocumentScreen.dart';
 import 'package:gearus_app/controller/services.dart';
 import 'package:gearus_app/uitilites/appconstant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'applyScreen1.dart';
 import 'feedbackScreen.dart';
+import 'notificationScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -170,10 +172,25 @@ class _HomeScreenState extends State<HomeScreen> {
   String fnamelatter = " ";
 
   bool applyedforLCC = false;
+  var name;
+  var email;
+  var status;
+  var licence_status;
+
+  getstatus() async {
+    status = await Services.viewLLC();
+    setState(() {});
+  }
 
   getDetails() async {
     var d = await Services.getDtails();
+    await getstatus();
     await Services.viewLLC();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    name = await sharedPreferences.getString("name") ?? "";
+    email = await sharedPreferences.getString("email") ?? "";
+    licence_status = await sharedPreferences.getString("licence_status") ?? "";
+    setState(() {});
     setState(() {
       userDeatils = d;
     });
@@ -186,12 +203,16 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       userDeatils = d;
       print(userDeatils);
-      if (userDeatils["name"]!.length >= 3) {
+      if (d["name"]!.length >= 3) {
         print("yess");
-        fnamelatter = userDeatils["name"].substring(0, 1).toString();
+        fnamelatter = d["name"].substring(0, 1).toString();
       } else {
         fnamelatter = "";
       }
+    });
+
+    Future.delayed(Duration(seconds: 3)).then((value) {
+      setState(() {});
     });
   }
 
@@ -207,22 +228,49 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var MediaQ = MediaQuery.of(context).size;
 
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppConstants.backgroundColors,
         onPressed: () async {
-          var details = await Services.getDtails();
-          if (details["applyforllc"] == "register") {
+          var details = await Services.viewLLC();
+          print("button  ${details}");
+
+          if(details == null){
+            applyOrRenewal();
+          }
+          if (details["status"] == "register") {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => QuizStartingScreen(),
             ));
-          } else if (details["applyforllc"] == "waitForAdminAproval") {
+          } else if (details["status"] == "TEM approve") {
             messages();
-          } else {
+          } else if (details["status"] == "Issue") {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ViewDocumentScreen(),
+            ));
+          } else if (licence_status["licence_status"] == "Yes") {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => RenewalScreen(),
+            ));
+
+          }else{
             applyOrRenewal();
           }
         },
-        label: Text(
+        label:status == null ?  Text(
+          "Apply",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ): status["status"] == "register"
+            ? Text(
+                "Apply",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )
+            :status["status"] == "Issue"
+            ? Text(
+                "See LLC",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ): Text(
           "Apply",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -250,10 +298,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: AppConstants.backgroundColors),
                 accountName: Text(
-                  userDeatils["name"] ?? "",
+                  name ?? "loading..",
                   style: TextStyle(fontSize: 18),
                 ),
-                accountEmail: Text(userDeatils["email"] ?? ""),
+                accountEmail: Text(email ?? "loading.."),
                 currentAccountPictureSize: Size.square(50),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -292,9 +340,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text("View documents"),
                 trailing: Icon(Icons.document_scanner),
                 onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) =>  RenewalScreen(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ViewDocumentScreen(),
+                  ));
                 },
               ),
             ),
@@ -305,6 +353,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => FeedBackScreen(),
+                  ));
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text("Notification"),
+                trailing: Icon(Icons.notifications),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => NotificationScreen(),
                   ));
                 },
               ),
@@ -348,14 +407,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      userDeatils["applyforllc"] == "register"
+                      licence_status["licence_status"] == "Yes"?Text(
+                        "Apply for  renewal license",
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ):     status == null
+                    ? Text(
+                    "You haven't apply for Driving license ",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                  ):
+                  status["status"] == "register"
                           ? Text(
                               "You have applied for LLC",
                               style: TextStyle(
                                   fontSize: 30, fontWeight: FontWeight.w600),
                               textAlign: TextAlign.center,
                             )
-                          : userDeatils["applyforllc"] == "waitForAdminAproval"
+                          : status["status"] == "TEM approve"
                               ? Text(
                                   "You have applied for LLC",
                                   style: TextStyle(
@@ -363,21 +436,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.w600),
                                   textAlign: TextAlign.center,
                                 )
-                              : Text(
-                                  "You haven't apply for Driving license ",
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w600),
-                                  textAlign: TextAlign.center,
-                                ),
-                      userDeatils["applyforllc"] == "register"
+                              : status["status"] == "Issue"
+                                  ? Text(
+                                      "Your License Approved",
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w600),
+                                      textAlign: TextAlign.center,
+                                    )
+                                   :Text(
+                                      "You haven't apply for Driving license ",
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w600),
+                                      textAlign: TextAlign.center,
+                                    ),
+
+                      ///---------------------------------------------
+                      licence_status["licence_status"] == "Yes"? Text(
+                        "Click below to apply ",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ): status == null
+                          ? Text(
+                        "Click below to apply ",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ):   status["status"] == "register"
                           ? Text(
                               "Click below to Start the test",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
                               textAlign: TextAlign.center,
                             )
-                          : userDeatils["applyforllc"] == "waitForAdminAproval"
+                          : status["status"] == "TEM approve"
                               ? Text(
                                   "Wait for Approval",
                                   style: TextStyle(
@@ -385,13 +481,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.w600),
                                   textAlign: TextAlign.center,
                                 )
-                              : Text(
-                                  "Click below to apply",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                  textAlign: TextAlign.center,
-                                ),
+                              : status["status"] == "Issue"
+                                  ? Text(
+                                      "Click below to see license",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  : Text(
+                                      "Click below to apply",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                      textAlign: TextAlign.center,
+                                    ),
                     ],
                   ),
                 ),
