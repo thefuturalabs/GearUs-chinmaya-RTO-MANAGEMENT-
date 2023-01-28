@@ -55,8 +55,10 @@ $data=mysqli_query($con,"select * from registration_tb where status='register'")
                 <a href="home.php" class="nav-item nav-link">Home</a>
                 <a href="view_userreg.php" class="nav-item nav-link">View Registration</a>
                 <a href="" class="nav-item nav-link"></a>
-                <a href="" class="nav-item nav-link">Logout</a>
                 <a href="issue_LLC.php" class="nav-item nav-link">Issue LLC</a>
+                <a href="Issue_notification.php" class="nav-item nav-link">Test Notification</a>
+                <a href="issue_Licence.php" class="nav-item nav-link">Licence Issue</a>
+                <a href="" class="nav-item nav-link">Logout</a>
                
         </div>
     </nav>

@@ -84,6 +84,8 @@ if(isset($_POST['submit']))
                 <a href="home.php" class="nav-item nav-link">Home</a>
                 <a href="view_userreg.php" class="nav-item nav-link">View Registration</a>
                 <a href="issue_LLC.php" class="nav-item nav-link">Issue LLC</a>
+                <a href="Issue_notification.php" class="nav-item nav-link">Test Notification</a>
+                <a href="issue_Licence.php" class="nav-item nav-link">Licence Issue</a>
                 <a href="" class="nav-item nav-link">Logout</a>
                
         </div>
@@ -113,7 +115,7 @@ if(isset($_POST['submit']))
     <!-- <label for="">Phone:<?php echo $row['phone'];?></label><br><br> -->
     <tr> <td><label for="">Birth place</td><td><?php echo $row['Birth_place'];?></label></td></tr>
     <tr> <td><label for="">Blood group</td><td><?php echo $row['Blood_group'];?></label></td></tr> 
-    <tr><td> <label for="">city</td><td> <?php echo $row['city'];?></label></td> <td rowspan="10"><label for="">proof:<img src="./image1/<?php echo $row['photo'];?>" height="200" width="200" alt=""> </td> </tr>
+    <tr><td> <label for="">city</td><td> <?php echo $row['city'];?></label></td> <td rowspan="10"><label for="">proof:<img src="./image1/<?php echo $row['proof'];?>" height="200" width="200" alt=""> </td> </tr>
     <tr> <td> <label for="">address</td><td><?php echo $row['address'];?></label></td> </tr>
     <tr> <td> <label for="">iden_mark</td><td><?php echo $row['iden_mark'];?></label></td> </tr>
     <tr> <td>  <label for="">LLC_type</td><td><?php echo $row['LLC_type'];?></label></td> </tr>
