@@ -353,16 +353,16 @@ var file;
                                       ],
                                     ),
                                   ),
-                                  ElevatedButton(onPressed: (){
-                                    downloadingImage( "${Services.url.split("API").first}image1/${snapshot.data["photo"]}");
-                                  }, child: Text("click")),
-
-
-                                 file != null ? Container(
-                                    height: 100,
-                                    width: 100,
-                                    child: Image.file(file),
-                                  ):Text("df"),
+                                 //  ElevatedButton(onPressed: (){
+                                 //    downloadingImage( "${Services.url.split("API").first}image1/${snapshot.data["photo"]}");
+                                 //  }, child: Text("click")),
+                                 //
+                                 //
+                                 // file != null ? Container(
+                                 //    height: 100,
+                                 //    width: 100,
+                                 //    child: Image.file(file),
+                                 //  ):Text("df"),
                                 ],
                               ),
                             ),
