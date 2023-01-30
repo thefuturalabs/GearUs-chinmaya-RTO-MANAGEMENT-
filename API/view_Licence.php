@@ -2,7 +2,7 @@
 include 'connection.php';
 $r_id=$_POST["r_id"];
 
- $data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` WHERE r_id='$r_id'");
+ $data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` inner join licence_tb on licence_tb.l_id=learners_llc_tb.l_id  WHERE r_id='$r_id'");
  $row=mysqli_fetch_assoc(($data));
  $list=array();
  if(mysqli_num_rows($data)>0)
@@ -26,14 +26,15 @@ $r_id=$_POST["r_id"];
   $myarray['status']=$row['status'];
   $myarray['state']=$row['state'];
   $myarray['qualification']=$row['qualification'];
-  $myarray['message']='sucess';
-
+  $myarray['from_date']=$row['from_date'];
+  $myarray['to_date']=$row['to_date'];
+  $myarray['message']="sucess";
     // array_push($list,$myarray);
 
 }
  else
  {
-   // SELECT * FROM `learners_llc_tb`inner join licence_tb on licence_tb.l_id=learners_llc_tb.l_id  WHERE r_id='$r_id'
+   // 
   
     $myarray['message']="failed";
     // array_push($list,$myarray);
