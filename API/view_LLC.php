@@ -7,7 +7,7 @@ $data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` WHERE r_id='$r_id'");
  $list=array();
  if(mysqli_num_rows($data)>0)
  {
-
+   $myarray['l_id']=$row['l_id'];
     $myarray['r_id']=$row['r_id'];
     $myarray['email']=$row['email'];
     $myarray['Birth_place']=$row['Birth_place'];

@@ -8,8 +8,7 @@ $data=mysqli_query($con,"SELECT * FROM `registration_tb` INNER join login_tb on 
 $row=mysqli_fetch_assoc($data);
 if(mysqli_num_rows($data)>0)
  {
- 
-  
+
   $list=array();
   $myarray['name']=$row['name'];
   $myarray['email']=$row['email'];

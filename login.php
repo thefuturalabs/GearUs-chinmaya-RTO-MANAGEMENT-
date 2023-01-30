@@ -93,13 +93,13 @@ if(isset($_POST['submit']))
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" name="uname" class="form-control border-0" id="gname" placeholder="Gurdian Name">
+                                        <input type="text" name="uname" class="form-control border-0" id="gname" placeholder="Gurdian Name" required>
                                         <label for="gname">User Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="password" name="pwd" class="form-control border-0" id="gmail" placeholder="Gurdian Email">
+                                        <input type="password" name="pwd" class="form-control border-0" id="gmail" placeholder="Gurdian Email" required>
                                         <label for="gmail">password</label></label>
                                     </div>
                                    
