@@ -838,6 +838,52 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                       ],
                     ),
                   ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      //controller: addressController,
+
+                      // validator: (value) {
+                      //   if (value!.isEmpty) {
+                      //     return "Please enter the address";
+                      //   }
+                      // },
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500),
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: AppConstants.backgroundColors),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: AppConstants.backgroundColors,
+                                  width: 2)),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppConstants.backgroundColors,
+                                width: 2),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppConstants.backgroundColors,
+                                width: 2),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppConstants.backgroundColors,
+                                width: 2),
+                          ),
+                          hintText: "1000",
+                          hintStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500)),
+                    ),
+                  ),
                   // Padding(
                   //   padding: const EdgeInsets.all(8.0),
                   //   child: Row(

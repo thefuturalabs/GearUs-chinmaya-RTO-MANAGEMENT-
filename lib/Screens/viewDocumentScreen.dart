@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:gearus_app/controller/services.dart';
 import 'package:image_downloader/image_downloader.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../uitilites/appconstant.dart';
 
@@ -17,7 +18,19 @@ class ViewDocumentScreen extends StatefulWidget {
 
 class _ViewDocumentScreenState extends State<ViewDocumentScreen> {
 
+  ScreenshotController screenshotController = ScreenshotController();
+
 var file;
+
+
+var deatils;
+getdata()async{
+  deatils = await Services.viewlicense();
+  setState(() {
+
+  });
+ print("approved ==${deatils}");
+}
   downloadingImage(String url)async{
 
     FileDownloader.downloadFile(
@@ -52,7 +65,12 @@ var file;
     // }
   }
 
-
+@override
+  void initState() {
+    // TODO: implement initState
+  getdata();
+    super.initState();
+  }
 
 
   @override
@@ -85,285 +103,432 @@ var file;
                       );
                     }
                     if (snapshot.hasData) {
+
                       return Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            color: AppConstants.backgroundColors,
-                            elevation: 2,
+                        child: Screenshot(
+                          controller: screenshotController,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              color: AppConstants.backgroundColors,
+                              elevation: 2,
 
-                            child: Container(
-                              width: size.width,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
-                                border: Border.all(color: AppConstants.backgroundColors)
-                              ),
+                              child: Container(
+                                width: size.width,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                  border: Border.all(color: AppConstants.backgroundColors)
+                                ),
 
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(
-                                              "${Services.url.split("API").first}image1/${snapshot.data["photo"]}"),
-                                        ),
-                                        border: Border.all(
-                                            color: AppConstants.backgroundColors,
-                                            width: 2)),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0,top:8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Name :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["first_name"]} ${snapshot.data["last_name"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Email :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["email"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                    Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(
+                                                "${Services.url.split("API").first}image1/${snapshot.data["photo"]}"),
+                                          ),
+                                          border: Border.all(
+                                              color: AppConstants.backgroundColors,
+                                              width: 2)),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Date of birth :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["DOB"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                    SizedBox(
+                                      height: 10,
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "State :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["state"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0,top:8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Licence No :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["l_id"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "City :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["city"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0,top:8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Name :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["first_name"]} ${snapshot.data["last_name"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Birth place :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["Birth_place"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Email :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["email"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Blood group :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["Blood_group"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Date of birth :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["DOB"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "LLC type :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["LLC_type"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "State :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["state"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Qualification :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Text(
-                                          "${snapshot.data["qualification"]}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        )
-                                      ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "City :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["city"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 8.0, top: 8),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "LLC status :  ",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        snapshot.data["status"] == "TEM approve"
-                                            ? Text(
-                                                "Waiting for RTO Approval",
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w400),
-                                              )
-                                            : snapshot.data["status"] == "Issue"
-                                                ? Text(
-                                                    "Approved",
-                                                    style: TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  )
-                                                :snapshot.data["status"] == "register"
-                                            ? Text(
-                                          "Not attentend the test",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight:
-                                              FontWeight.w400),
-                                        )
-                                            : Text(
-                                                    "Pending",
-                                                    style: TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  )
-                                      ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Birth place :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["Birth_place"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                 //  ElevatedButton(onPressed: (){
-                                 //    downloadingImage( "${Services.url.split("API").first}image1/${snapshot.data["photo"]}");
-                                 //  }, child: Text("click")),
-                                 //
-                                 //
-                                 // file != null ? Container(
-                                 //    height: 100,
-                                 //    width: 100,
-                                 //    child: Image.file(file),
-                                 //  ):Text("df"),
-                                ],
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Blood group :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["Blood_group"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "LLC type :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["LLC_type"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Qualification :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${snapshot.data["qualification"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "LLC status :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          snapshot.data["status"] == "TEM approve"
+                                              ? Text(
+                                                  "Waiting for RTO Approval",
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight: FontWeight.w400),
+                                                )
+                                              : snapshot.data["status"] == "Issue"
+                                                  ? Text(
+                                                      "Approved",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    )
+                                                  :snapshot.data["status"] == "register"
+                                              ? Text(
+                                            "Not attentend the test",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight:
+                                                FontWeight.w400),
+                                          ):snapshot.data["status"] == "licence issue"
+                                              ? Text(
+                                            "Approved",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight:
+                                                FontWeight.w400),
+                                          )
+                                              : Text(
+                                                      "Pending",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    )
+                                        ],
+                                      ),
+                                    ),
+
+                                    snapshot.data["status"] == "licence issue"
+                                        ? Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Licence :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "Approved",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ):Text(""),
+
+                                    deatils!= null ? Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "From date :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${deatils["from_date"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ):Text(""),
+
+                                    deatils!= null ? Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 8.0, top: 8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "To date :  ",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${deatils["to_date"]}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ],
+                                      ),
+                                    ):Text(""),
+                                    
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 18.0),
+                                      child: InkWell(
+                                        onTap: () async {
+
+                                          screenshotController.capture().then(( image) {
+                                            //Capture Done
+                                            setState(() {
+                                              // _imageFile = image;
+                                              print(image);
+
+
+                                           file =   File( 'image.jpg').writeAsBytes(image!);
+                                              print(file.path);
+                                            });
+                                          }).catchError((onError) {
+                                            print(onError);
+                                          });
+
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          width: 190,
+                                          decoration: BoxDecoration(
+                                              color: AppConstants.backgroundColors,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey,
+                                                  offset: Offset(4, 4),
+                                                  spreadRadius: 1,
+                                                  blurRadius: 2,
+                                                )
+                                              ],
+                                              borderRadius: BorderRadius.all(Radius.circular(20))),
+                                          child: Center(
+                                            child: Text(
+                                              "Download",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                   //  ElevatedButton(onPressed: (){
+                                   //    downloadingImage( "${Services.url.split("API").first}image1/${snapshot.data["photo"]}");
+                                   //  }, child: Text("click")),
+                                   //
+                                   //
+                                   file != null ? Container(
+                                      height: 100,
+                                      width: 100,
+                                      child: Image.file(file),
+                                    ):Text("df"),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

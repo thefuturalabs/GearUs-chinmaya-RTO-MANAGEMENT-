@@ -190,6 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
     name = await sharedPreferences.getString("name") ?? "";
     email = await sharedPreferences.getString("email") ?? "";
     licence_status = await sharedPreferences.getString("licence_status") ?? "";
+    print(" listus status${licence_status}");
     setState(() {});
     setState(() {
       userDeatils = d;
@@ -234,6 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppConstants.backgroundColors,
         onPressed: () async {
           var details = await Services.viewLLC();
+
           print("button  ${details}");
 
           if(details == null){
@@ -245,15 +247,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ));
           } else if (details["status"] == "TEM approve") {
             messages();
-          } else if (details["status"] == "Issue") {
+          } else if (details["status"] == "Issue" ) {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ViewDocumentScreen(),
             ));
-          } else if (licence_status["licence_status"] == "Yes") {
+          } else if (userDeatils["licence_status"] == "Yes") {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => RenewalScreen(),
             ));
 
+          }else if(details["status"] == "licence issue" ){
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => RenewalScreen(),
+            ));
           }else{
             applyOrRenewal();
           }
@@ -407,13 +413,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      licence_status["licence_status"] == "Yes"?Text(
+                      userDeatils["licence_status"] == "Yes"?Text(
                         "Apply for  renewal license",
                         style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w600),
                         textAlign: TextAlign.center,
-                      ):     status == null
+                      ):status == null
                     ? Text(
                     "You haven't apply for Driving license ",
                     style: TextStyle(
@@ -438,12 +444,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               : status["status"] == "Issue"
                                   ? Text(
-                                      "Your License Approved",
+                                      "Your LLC Approved",
                                       style: TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.center,
                                     )
+                      : status["status"] == "licence issue"
+                      ? Text(
+                    "Your License Approved",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                  )
                                    :Text(
                                       "You haven't apply for Driving license ",
                                       style: TextStyle(
@@ -453,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
 
                       ///---------------------------------------------
-                      licence_status["licence_status"] == "Yes"? Text(
+                      userDeatils["licence_status"] == "Yes"? Text(
                         "Click below to apply ",
                         style: TextStyle(
                             fontSize: 20,
@@ -483,12 +497,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               : status["status"] == "Issue"
                                   ? Text(
-                                      "Click below to see license",
+                                      "Click below to see LLC",
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.center,
-                                    )
+                                    ): status["status"] == "licence issue"
+                          ? Text(
+                        "Click below to Renewa your License",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      )
                                   : Text(
                                       "Click below to apply",
                                       style: TextStyle(

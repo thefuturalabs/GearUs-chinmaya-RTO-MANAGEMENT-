@@ -128,6 +128,7 @@ class Services {
     request.fields["state"] = state;
     request.fields["r_id"] = id;
   request.fields["mark"] = "0";
+  request.fields["amount"] = "1000";
 
     // request.files.add(MultipartFile.fromBytes(
     //     "proof", File(qualificattionPhoto!.path).readAsBytesSync(),
@@ -254,6 +255,7 @@ class Services {
       "r_id": id,
     };
     var response = await post(Uri.parse("${url}view_LLC.php"), body: body);
+    print("view llc -- ${response.body}");
     if (response.statusCode == 200) {
       var rbody = jsonDecode(response.body);
       print("view llc -- ${rbody}");
@@ -365,5 +367,59 @@ class Services {
         return rbody;
       }
     }
+  }
+
+  static Future<dynamic> viewlicense()async{
+    var details = await getDtails();
+    var id = await details["id"];
+    var body = {"r_id": id,};
+    var response =
+    await post(Uri.parse("${url}view_Licence.php"), body: body);
+
+    if(response.statusCode ==200){
+      var rbody = jsonDecode(response.body);
+      print(rbody);
+
+      if (rbody["message"] == "sucess") {
+        return rbody;
+      }
+    }
+  }
+
+  static Future<dynamic> renewLicences(String amount,date,File image,BuildContext context)async{
+    final fullurl = "${url}renew_license.php";
+    var request = MultipartRequest("POST", Uri.parse(fullurl));
+    var details = await getDtails();
+    var id = await details["id"];
+    request.fields["r_id"] = id;
+    request.fields["amount"] = amount;
+    request.fields["date"] = date;
+    request.files.add(MultipartFile.fromBytes(
+        "image", File(image!.path).readAsBytesSync(),
+        filename: image!.path));
+
+    request.send().then((response)async {
+      EasyLoading.show(status: 'loading...');
+      if(response.statusCode ==200){
+        final data = await Response.fromStream(response);
+
+        var rbody = jsonDecode(data.body);
+        if(rbody["message"] == "success"){
+          EasyLoading.dismiss();
+          Navigator.of(context).pushAndRemoveUntil(
+            // the new route
+            MaterialPageRoute(
+              builder: (BuildContext context) => HomeScreen(),
+            ),
+
+                (Route route) => false,
+          );
+
+        }
+
+
+      }
+
+    });
   }
 }
