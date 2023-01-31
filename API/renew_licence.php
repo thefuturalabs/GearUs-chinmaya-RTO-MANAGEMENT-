@@ -1,7 +1,7 @@
 <?php
 include 'connection.php';
 
-$r_id=$_POST["r_id"];
+$l_id=$_POST["l_id"];
 $amount=$_POST["amount"];
 $date=$_POST["date"];
 
@@ -18,23 +18,16 @@ if($proof != "")
     move_uploaded_file($_FILES['image']['tmp_name'],"../image1/".$filenew);
 
 }
-$data=mysqli_query($con,"INSERT INTO `renew_licence_tbl`(`date`, `amount`, `image`) VALUES ('$date','$amount','$image')");
+$data=mysqli_query($con,"INSERT INTO `renew_licence_tbl`(`date`, `amount`, `image`,`l_id`,`status`) VALUES ('$date','$amount','$filenew','$l_id','pending')");
  if($data)
  {
-
-
-
-  $myarray['message']='sucess';
-   
-  
+  $myarray['message']='sucess'; 
 }
  else
  {
-  
- 
+
   $myarray['message']='failed';
-   
-   
+ 
 }
 
   echo json_encode($myarray);
