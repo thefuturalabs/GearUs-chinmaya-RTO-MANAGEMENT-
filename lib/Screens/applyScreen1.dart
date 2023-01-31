@@ -840,6 +840,15 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                   ),
 
                   Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Text("Amount",style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w400),),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       //controller: addressController,
@@ -849,6 +858,8 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                       //     return "Please enter the address";
                       //   }
                       // },
+                      readOnly:  true,
+
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 17,
@@ -878,6 +889,7 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                                 width: 2),
                           ),
                           hintText: "1000",
+                          //labelText: "Amount",
                           hintStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 17,

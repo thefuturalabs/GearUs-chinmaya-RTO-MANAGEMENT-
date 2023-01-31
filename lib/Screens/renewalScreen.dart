@@ -215,6 +215,14 @@ class _RenewalScreenState extends State<RenewalScreen> {
                     ),
                   ),
                   Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Text("Amount",style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w400),),
+                      ],
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       //controller: emailController,
@@ -223,6 +231,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                       //     return "Please enter the email";
                       //   }
                       // },
+                      readOnly:  true,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 17,
@@ -248,7 +257,7 @@ class _RenewalScreenState extends State<RenewalScreen> {
                                 color: AppConstants.backgroundColors, width: 2),
                           ),
                           hintText: "500",
-                          labelText: "Amount",
+                         // labelText: "Amount",
                           hintStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 17,
@@ -468,12 +477,23 @@ class _RenewalScreenState extends State<RenewalScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 18.0),
                     child: InkWell(
-                      onTap: () {
+                      onTap: ()async {
                         final valid = formkey.currentState!.validate();
                         final DateFormat formatter = DateFormat('yyyy-MM-dd');
                         final String formatted = formatter.format(DateTime.now());
+                       var  deatils = await Services.viewlicense();
+
+
+
                         if(valid){
-                          Services.renewLicences("500", formatted, licensephoto!, context);
+                          if(deatils ==  null){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("You don't have license")));
+                          }else if(licensephoto != null){
+                            Services.renewLicences("500",licenseNumberController.text, formatted, licensephoto!, context);
+
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("please upload license photo")));
+                          }
                         }
 
 

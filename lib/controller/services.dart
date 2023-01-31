@@ -164,6 +164,8 @@ class Services {
             SnackBar(content: Text("Somthing went wrong please try again2")));
       }
     });
+    EasyLoading.dismiss();
+   // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("somthing went wrong")));
   }
 
 
@@ -208,6 +210,9 @@ class Services {
 
           return true;
         }
+      }else{
+        EasyLoading.dismiss();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("somthing went wrong")));
       }
     });
 
@@ -244,7 +249,13 @@ class Services {
 
           (Route route) => false,
         );
+      }else{
+        EasyLoading.dismiss();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("somthing went wrong")));
       }
+    }else{
+      EasyLoading.dismiss();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("somthing went wrong")));
     }
   }
 
@@ -386,12 +397,12 @@ class Services {
     }
   }
 
-  static Future<dynamic> renewLicences(String amount,date,File image,BuildContext context)async{
-    final fullurl = "${url}renew_license.php";
+  static Future<dynamic> renewLicences(String amount, licenseid,date,File image,BuildContext context)async{
+    final fullurl = "${url}renew_licence.php";
     var request = MultipartRequest("POST", Uri.parse(fullurl));
-    var details = await getDtails();
-    var id = await details["id"];
-    request.fields["r_id"] = id;
+    // var details = await viewlicense();
+    // var id = await details["l_id"];
+    request.fields["l_id"] = licenseid;
     request.fields["amount"] = amount;
     request.fields["date"] = date;
     request.files.add(MultipartFile.fromBytes(
@@ -404,7 +415,8 @@ class Services {
         final data = await Response.fromStream(response);
 
         var rbody = jsonDecode(data.body);
-        if(rbody["message"] == "success"){
+        print(rbody);
+        if(rbody["message"] == "sucess"){
           EasyLoading.dismiss();
           Navigator.of(context).pushAndRemoveUntil(
             // the new route
@@ -416,8 +428,16 @@ class Services {
           );
 
         }
+      else{
+        EasyLoading.dismiss();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("somthing went wrong")));
+      }
 
 
+
+      }else{
+        EasyLoading.dismiss();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("somthing went wrong")));
       }
 
     });
