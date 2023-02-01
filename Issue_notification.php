@@ -1,6 +1,6 @@
 <?php
 include 'connection.php';
-$data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` where status='Issue'");
+$data=mysqli_query($con,"SELECT * FROM `learners_llc_tb` WHERE STATUS='Issue'");
 if(isset($_POST['submit']))
 {
 echo "<script>alert('sucess')</script>";
@@ -77,22 +77,16 @@ echo "<script>alert('sucess')</script>";
                           <th>
                             name
                           </th>
+                        
                           <th>
-                            DOB
+                            current status
                           </th>
-                          <th>
-                            Email
-                          </th>
-                          <th>
-                            Phone No
-                          </th>
-                          <th>
-                            Qualification
-                          </th>
+                         
+      
                           <th>
                             Mark
                           </th>
-                          <th>r_id</th>
+                          <!-- <th>r_id</th> -->
                        <th></th>
                         </tr>
                       </thead>
@@ -104,13 +98,9 @@ echo "<script>alert('sucess')</script>";
      <tr>
      <td><?php echo $row['l_id'];?></td>
     <td><?php echo $row['first_name'];?> <?php echo $row['last_name'];?></td>
-    <td><?php echo $row['DOB'];?></td>
-    <td><?php echo $row['email'];?></td>
-    <!-- <td><?php echo $row['phone'];?></td> -->
-    <td><?php echo $row['iden_mark'];?></td>
-    <td><?php echo $row['address'];?></td>
+    <td><?php echo $row['status'];?></td>
     <td><?php echo $row['mark'];?></td>
-    <td><?php echo $row['r_id'];?></td>
+    <!-- <td><?php echo $row['r_id'];?></td> -->
   
  <td>
    <!-- Button trigger modal -->

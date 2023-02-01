@@ -1,31 +1,6 @@
 <?php
 include 'connection.php';
-$rid=$_GET['id'];
-if(isset($_POST['submit']))
-{
-    $data=mysqli_query($con,"SELECT * FROM `notification_tbl` WHERE r_id='$rid' and status='send'");
-    if(mysqli_num_rows($data)>0)
-    { 
-        echo "<script>alert('alerdy send')</script>";
-
-    }
-    else
-    {
-    $date=$_POST['date'];
- 
-    $noti=$_POST['noti'];
-    $time=$_POST['time'];
-    $data=mysqli_query($con,"INSERT INTO `notification_tbl`(`notification`, `attend_date`, `status`, `r_id`,`time`) VALUES ('$noti','$date','send','$rid','$time')");
- $data1=mysqli_query($con,"");
-    
-     header("location:home.php");
-  
-       echo "<script>alert('Invalid Username or password')</script>";
- 
-    }
-    
-}
-
+$data=mysqli_query($con,"SELECT * FROM `feedback_tbl` inner join registration_tb on feedback_tbl.r_id=registration_tb.r_id");
 ?>
 
 
@@ -33,13 +8,8 @@ if(isset($_POST['submit']))
 <html lang="en">
 
 <head>
-  <style>
-   td{
-    color: blue;
-   }
-  </style>
     <meta charset="utf-8">
-    <title>GearUS</title>
+    <title>Drivin - Driving School Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -85,20 +55,52 @@ if(isset($_POST['submit']))
 <div class="col-12 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s"> 
     <form action="" method="POST">
                      <div class="bg-primary text-center p-5">
-                        <h1 class="mb-4">Send notification</h1>
+                        <h1 class="mb-4">Feed Back</h1>
                         <form>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-floating">
-                       <form action="issue_notification2.php?id=<?php echo $lid;?>" method="POST">
-    <table >
-    <tr>
+                                    <table class="table table-bordered" class="table-warning">
+                      <thead>
+                        <tr>
+                
+                          <th>
+                            Id
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                           Feedback
+                          </th>
+                          <th>
+                           Date
+                          </th>
+</tr>
+                      </thead>
+                      <tbody>
+                      <?php
+        while($row=mysqli_fetch_assoc($data))
+        {
+        ?>
+     <tr>
+    
+    <td><?php echo $row['Feed_id'];?></td>
+    <td><?php echo $row['name'];?></td></td>
+    <td><?php echo $row['Feedback'];?></td>
+    <td><?php echo $row['Date'];?></td>
+    
+   
+ 
+   
+   </tr>
 
- <td>Select date:</td>   <td><input type="date" name="date"></td></tr>
- <tr><td>Notification</td>   <td> <textarea name="noti" id="" cols="15" rows="5"></textarea> </td></tr>
- <td>Time</td>   <td> <input type="time" name="time"> </td></tr>
- <td></td>   <td> <button name="submit">Send</button> </td></tr>
-</table>
+       <?php
+        }
+        ?>
+                                </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>  
@@ -116,6 +118,35 @@ if(isset($_POST['submit']))
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+    
+                    
+        
+     
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -126,9 +157,6 @@ if(isset($_POST['submit']))
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-
-  
 </body>
 
 </html>

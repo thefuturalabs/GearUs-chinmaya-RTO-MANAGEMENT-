@@ -118,7 +118,7 @@ echo "<script>alert('sucess')</script>";
    <?php
    $lid= $row['l_id'];
    ?>
-   <a style="color:blue" href="issue_LLC1.php?l_id=<?php echo $lid?>" id="edit">edit</a>
+   <a style="color:blue" href="issue_LLC1.php?l_id=<?php echo $lid?>" id="edit">Issue LLC</a>
 
 </td>
 <!-- Modal -->

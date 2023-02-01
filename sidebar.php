@@ -8,10 +8,11 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="home.php" class="nav-item nav-link">Home</a>
-                <a href="view_userreg.php" class="nav-item nav-link">View Registration</a>
+                <a href="view_userreg.php" class="nav-item nav-link">Registration</a>
                 <a href="issue_LLC.php" class="nav-item nav-link">Issue LLC</a>
                 <a href="issue_Licence.php" class="nav-item nav-link">Licence Issue</a>
                 <a href="renew_Licence.php" class="nav-item nav-link">Renew Licence</a>
+                <a href="view_feedback.php" class="nav-item nav-link">Feedback</a>
                 <a href="Issue_notification.php" class="nav-item nav-link">Test Notification</a>
                 <a href="login.php" class="nav-item nav-link">Logout</a>
                

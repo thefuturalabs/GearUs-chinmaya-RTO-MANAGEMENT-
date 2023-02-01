@@ -101,8 +101,8 @@ if(isset($_POST['submit']))
     <tr> <td>  <label for="">mark</td><td><?php echo $row['mark'];?></label></td></tr>
    
     <tr>  <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td></tr>
-    <tr>   <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td> </tr>
-    <tr> <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td> </tr>
+    <!-- <tr>   <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td> </tr>
+    <tr> <td>  <label for="">qualification</td><td><?php echo $row['qualification'];?></label></td> </tr> -->
     <tr> <td>  <label for="">state</td><td><?php echo $row['state'];?></label></td> </tr>
 
 

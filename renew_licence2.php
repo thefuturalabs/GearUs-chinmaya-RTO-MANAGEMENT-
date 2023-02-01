@@ -10,6 +10,8 @@ $todate=$_POST['todate'];
 
 $data=mysqli_query($con,"UPDATE `licence_tb` SET `from_date`='$fdate',`to_date`='$todate',`status`='renew' WHERE l_id='$l_id'");
 // mysqli_query($con,"UPDATE `learners_llc_tb` set `status`='licence issue' WHERE l_id='$l_id'");
+$data=mysqli_query($con,"UPDATE `renew_licence_tbl` SET `status`='renew' WHERE l_id='$l_id'");
+
 echo "<script>alert('Licence  Issue')</script>";
   
     header("location:home.php");
