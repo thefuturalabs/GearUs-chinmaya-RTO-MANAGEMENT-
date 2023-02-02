@@ -239,7 +239,9 @@ class _HomeScreenState extends State<HomeScreen> {
           print("button  ${details}");
 
           if(details == null){
-            applyOrRenewal();
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ApplyScreen1(),
+            ));
           }
           if (details["status"] == "register") {
             Navigator.of(context).push(MaterialPageRoute(

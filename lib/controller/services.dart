@@ -76,11 +76,13 @@ class Services {
       String username, password, BuildContext context) async {
     var body = {"user_name": username, "password": password};
     var response = await post(Uri.parse("${url}login.php"), body: body);
+    print(" login response ${response.body}");
 
     if (response.statusCode == 200) {
       var rbody = jsonDecode(response.body);
 
       if (rbody["message"] == "sucess") {
+        print(" login response ${rbody}");
         setdetails(rbody["r_id"], rbody["name"], rbody["email"],
             rbody["licence_status"]);
 

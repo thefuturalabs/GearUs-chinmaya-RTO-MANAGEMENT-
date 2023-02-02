@@ -495,6 +495,7 @@ class _ReqScreenState extends State<ReqScreen> {
                                 return "Please enter the password";
                               }
                             },
+                            obscureText: isPasswordVisible,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 17,
