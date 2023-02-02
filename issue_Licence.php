@@ -64,7 +64,7 @@ echo "<script>alert('sucess')</script>";
 <div class="col-12 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s"> 
     <form action="" method="POST">
                      <div class="bg-primary text-center p-5">
-                        <h1 class="mb-4">Learners Licence Request</h1>
+                        <h1 class="mb-4">Licence Request</h1>
                         <form>
                             <div class="row">
                                 <div class="col-12">

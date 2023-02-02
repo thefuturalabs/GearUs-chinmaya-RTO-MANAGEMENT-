@@ -16,7 +16,7 @@ if(isset($_POST['submit']))
     $noti=$_POST['noti'];
     $time=$_POST['time'];
     $data=mysqli_query($con,"INSERT INTO `notification_tbl`(`notification`, `attend_date`, `status`, `r_id`,`time`) VALUES ('$noti','$date','send','$rid','$time')");
- $data1=mysqli_query($con,"");
+//  $data1=mysqli_query($con,"");
     
      header("location:home.php");
   
@@ -36,6 +36,10 @@ if(isset($_POST['submit']))
   <style>
    td{
     color: blue;
+   }
+   table
+   {
+    width: 100%;
    }
   </style>
     <meta charset="utf-8">
@@ -94,10 +98,10 @@ if(isset($_POST['submit']))
     <table >
     <tr>
 
- <td>Select date:</td>   <td><input type="date" name="date"></td></tr>
- <tr><td>Notification</td>   <td> <textarea name="noti" id="" cols="15" rows="5"></textarea> </td></tr>
- <td>Time</td>   <td> <input type="time" name="time"> </td></tr>
- <td></td>   <td> <button name="submit">Send</button> </td></tr>
+ <td>Select date:</td>   <td><input type="date" name="date" required></td></tr>
+ <tr><td>Notification</td>   <td> <textarea name="noti" id="" cols="40" rows="5" required> </textarea> </td></tr>
+ <td>Time</td>   <td> <input type="time" name="time" required> </td></tr>
+ <td></td>   <td> <button name="submit" class="btn btn-info" style="width: 15%;">Send</button> </td></tr>
 </table>
                         </form>
                     </div>
