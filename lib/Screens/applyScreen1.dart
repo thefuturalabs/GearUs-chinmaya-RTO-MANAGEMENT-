@@ -22,6 +22,17 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
     "Four Wheels",
     "Heavy Licence"
   ];
+  bool twowheel =false;
+  bool threeWheel = false;
+  bool fourwheel = false;
+  bool HeavyLic = false;
+
+  bool isCheckboxClick = false;
+  String two ="";
+  String three ="";
+  String four1="";
+  String heavy ="";
+
 
   bool isAdult = false;
   dateselecting() async {
@@ -699,55 +710,104 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                               fontWeight: FontWeight.w500)),
                     ),
                   ),
+                  // Padding(
+                  //   padding:
+                  //       const EdgeInsets.only(left: 4.0, right: 4, top: 10),
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //         border: Border.all(
+                  //             color: AppConstants.backgroundColors, width: 2),
+                  //         borderRadius: BorderRadius.all(Radius.circular(4))),
+                  //     width: MediaQuery.of(context).size.width,
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.only(left: 8.0),
+                  //       child: DropdownButtonHideUnderline(
+                  //         child: IgnorePointer(
+                  //           ignoring: false,
+                  //           child: DropdownButton<String>(
+                  //             isExpanded: true,
+                  //             elevation: 0,
+
+                  //             style: TextStyle(
+                  //                 fontSize: 18,
+                  //                 fontWeight: FontWeight.w400,
+                  //                 color: Colors.black),
+
+                  //             hint: Text(
+                  //               ' Please choose Vehicle type',
+                  //             ), // Not necessary for Option 1
+                  //             value: seletedVehicleType,
+                  //             onChanged: (newValue) {
+                  //               setState(() {
+                  //                 seletedVehicleType = newValue;
+                  //               });
+                  //             },
+                  //             items: ListOfVechileType.map((location) {
+                  //               return DropdownMenuItem(
+                  //                 child: Container(
+                  //                   child: new Text(
+                  //                     location,
+                  //                     maxLines: 1,
+                  //                     overflow: TextOverflow.ellipsis,
+                  //                   ),
+                  //                 ),
+                  //                 value: location,
+                  //               );
+                  //             }).toList(),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 4.0, right: 4, top: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppConstants.backgroundColors, width: 2),
-                          borderRadius: BorderRadius.all(Radius.circular(4))),
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: DropdownButtonHideUnderline(
-                          child: IgnorePointer(
-                            ignoring: false,
-                            child: DropdownButton<String>(
-                              isExpanded: true,
-                              elevation: 0,
-
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black),
-
-                              hint: Text(
-                                ' Please choose Vehicle type',
-                              ), // Not necessary for Option 1
-                              value: seletedVehicleType,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  seletedVehicleType = newValue;
-                                });
-                              },
-                              items: ListOfVechileType.map((location) {
-                                return DropdownMenuItem(
-                                  child: Container(
-                                    child: new Text(
-                                      location,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  value: location,
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Text("Please select the Licence Type",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                      ],
                     ),
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(value: twowheel, onChanged: (value) {
+                        setState(() {
+                          twowheel = value!;
+                          isCheckboxClick = true;
+
+                        });
+                      },),Text("Two Wheels",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(value: threeWheel, onChanged: (value) {
+                        setState(() {
+                          threeWheel = value!;
+                          isCheckboxClick = true;
+                        });
+                      },),Text("Three Wheels",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(value: fourwheel, onChanged: (value) {
+                        setState(() {
+                          fourwheel = value!;
+                          isCheckboxClick = true;
+                        });
+                      },),Text("Four Wheels",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),)
+                    ],
+                  ),
+                   Row(
+                    children: [
+                      Checkbox(value: HeavyLic, onChanged: (value) {
+                        setState(() {
+                          HeavyLic = value!;
+                          isCheckboxClick = true;
+                        });
+                      },),Text("Heavy Licence",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),)
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -945,25 +1005,14 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                           if (isAdult == false) {
                             Services.errorMessage(
                                 "Must have 18+ year to apply", context);
-                          } else {
-                          var result = await  Services.applyForLCC(
-                                addressController.text,
-                                emailController.text,
-                                birthplaceController.text,
-                                phoneController.text,
-                                bloodGroupController.text,
-                                cityController.text,
-                                dateOfborthController.text,
-                                firstnameController.text,
-                                identificationControoler.text,
-                                lastnameContoller.text,
-                                seletedVehicleType,
-                                pickImage!,
-                                pickQualification!,
-                                qualificationController.text,
-                                stateController.text,
-                                context);
+                          } else if(isCheckboxClick ==false ) {
 
+                           // print(twowheel);
+                             print(HeavyLic);
+
+
+
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please select the Licence Type")));
                         //  print(result);
 
                           // if(result == "true"){
@@ -975,6 +1024,56 @@ class _ApplyScreen1State extends State<ApplyScreen1> {
                           // Services.errorMessage("somthing went wrong", context);
                           // }
 
+                          }else{
+
+                            int c =0;
+
+
+                            if(twowheel == true){
+                             two ="Two Wheels";
+                              isCheckboxClick = true;
+                            }
+                            if(threeWheel == true){
+                             three =  "Three Wheels";
+                              isCheckboxClick = true;
+                            }
+                            if(fourwheel == true){
+                             four1 ="Four Wheels";
+                              isCheckboxClick = true;
+                            } 
+                            if(HeavyLic == true){
+                              heavy ="Heavy Licence";
+                               isCheckboxClick = true;
+                            }
+
+
+                            if( isCheckboxClick == false){
+                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please select the Licence Type")));
+
+                            }else{
+                               print(" select licnse ${two},${three},${four1},${heavy}");
+
+                           
+                            var result = await  Services.applyForLCC(
+                                addressController.text,
+                                emailController.text,
+                                birthplaceController.text,
+                                phoneController.text,
+                                bloodGroupController.text,
+                                cityController.text,
+                                dateOfborthController.text,
+                                firstnameController.text,
+                                identificationControoler.text,
+                                lastnameContoller.text,
+                                "${two} ${three} ${four1} ${heavy}",
+                                pickImage!,
+                                pickQualification!,
+                                qualificationController.text,
+                                stateController.text,
+                                context);
+                            }
+
+                           
                           }
 
 

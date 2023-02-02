@@ -397,11 +397,15 @@ getdata()async{
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w400),
                                             ),
-                                            Text(
-                                              "${snapshot.data["LLC_type"]}",
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w400),
+                                            Container(
+                                              width: MediaQuery.of(context).size.width/1.65,
+                                              height: 50,
+                                              child: Text(
+                                                "${snapshot.data["LLC_type"]}",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w400),overflow: TextOverflow.ellipsis,maxLines: 2,
+                                              ),
                                             )
                                           ],
                                         ),
