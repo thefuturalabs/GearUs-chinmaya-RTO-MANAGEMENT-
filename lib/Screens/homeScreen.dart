@@ -278,7 +278,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ? Text(
                 "See LLC",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ): Text(
+              ): status["status"] == "licence issue"
+            ? Text(
+          "See Licence",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ):Text(
           "Apply",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
